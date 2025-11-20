@@ -1,0 +1,129 @@
+# ===========================
+#  PYTHON / FASTAPI PROJECT
+# ===========================
+
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+
+# Environment variables
+.env
+.env.*
+
+# ===========================
+#  LOGS & RUNTIME
+# ===========================
+
+*.log
+backend.log
+logs/
+tmp/
+
+# ===========================
+#  DATABASE FILES
+# ===========================
+
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+
+# ===========================
+#  FASTAPI / UVICORN
+# ===========================
+
+reload/
+.hotreload/
+
+# ===========================
+#  MACHINE LEARNING FILES
+# ===========================
+
+# ML models (ANYWHERE in project)
+*.joblib
+*.pkl
+*.ckpt
+*.bin
+*.model
+*.txt
+*.npy
+*.npz
+
+# Model directories
+ml_lab/models/
+cybermorph_backend/ml_lab/models/
+ml_lab/checkpoints/
+
+# TensorBoard logs
+runs/
+tensorboard/
+
+# ===========================
+#  DATASETS (EMBER - DO NOT COMMIT)
+# ===========================
+
+ml_lab/datasets/
+cybermorph_backend/ml_lab/datasets/
+datasets/
+data/
+raw_data/
+downloads/
+
+F:\CyberMorph\cybermorph_backend\ml_lab\models\ember_model_2018.txt
+# ===========================
+#  FILE UPLOADS
+# ===========================
+
+uploads/
+media/
+files/
+*uploads/
+
+# ===========================
+#  BACKEND SCRIPTS
+# ===========================
+
+run.sh
+
+# ===========================
+#  CACHE
+# ===========================
+
+__cache__/
+.cache/
+.python_cache/
+*.tmp
+
+# ===========================
+#  OS-LEVEL GARBAGE
+# ===========================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux temp
+*~
