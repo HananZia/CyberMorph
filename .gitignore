@@ -56,15 +56,14 @@ reload/
 #  MACHINE LEARNING FILES
 # ===========================
 
-# ML models (ANYWHERE in project)
+# ML models
 *.joblib
 *.pkl
 *.ckpt
 *.bin
 *.model
-*.txt
-*.npy
-*.npz
+ml_lab/models/*.txt
+cybermorph_backend/ml_lab/models/*.txt
 
 # Model directories
 ml_lab/models/
@@ -76,7 +75,7 @@ runs/
 tensorboard/
 
 # ===========================
-#  DATASETS (EMBER - DO NOT COMMIT)
+#  DATASETS
 # ===========================
 
 ml_lab/datasets/
@@ -86,7 +85,6 @@ data/
 raw_data/
 downloads/
 
-F:\CyberMorph\cybermorph_backend\ml_lab\models\ember_model_2018.txt
 # ===========================
 #  FILE UPLOADS
 # ===========================
@@ -110,6 +108,15 @@ __cache__/
 .cache/
 .python_cache/
 *.tmp
+
+# ===========================
+#  FRONTEND / NODE
+# ===========================
+
+node_modules/
+dist/
+build/
+*.log
 
 # ===========================
 #  OS-LEVEL GARBAGE

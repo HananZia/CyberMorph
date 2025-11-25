@@ -1,28 +1,114 @@
-from fastapi import APIRouter, UploadFile, File
+# app/api/scan_routes.py
+from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from app.database.session import get_db
+from app.database import models
+from app.schemas.scan import ScanResponse
+from app.core.security import get_current_user_info
+from app.core.config import get_settings
+from app.utils.util import save_upload, sha256_of_file, build_features_deterministic
+from app.core.malware import model, predict_malware  # model is loaded in core.malware
 import os
-import tempfile
 
-from ml_lab.models.model_predict import predict_file
+router = APIRouter(prefix="/scan", tags=["scan"])
 
-router = APIRouter(prefix="/scan")
+settings = get_settings()
+
+@router.post("/upload", response_model=ScanResponse)
+async def upload_and_scan(file: UploadFile = File(...), token: str = Depends(None), db: Session = Depends(get_db)):
+    """
+    Upload a file (binary). The backend will save it, create deterministic features
+    compatible with the trained model, predict probability and store scan log.
+    """
+    content = await file.read()
+    filepath = save_upload(file.filename, content)
+    file_hash = sha256_of_file(filepath)
+
+    # Make sure model provides expected number features
+    try:
+        expected = getattr(model, "n_features_", None)
+        if expected is None:
+            # try to get booster feature names length
+            expected = getattr(model, "booster_", None) and len(model.booster_.feature_name()) or None
+    except Exception:
+        expected = None
+
+    if expected is None:
+        # fallback: choose a reasonable default
+        expected = 2381
+
+    # Build deterministic features for this file (placeholder for real extractor)
+    features = build_features_deterministic(filepath, expected)
+
+    # Run prediction
+    try:
+        score = predict_malware(features)  # float probability
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
+
+    verdict = "malicious" if score >= 0.5 else "benign"
+
+    # store scan log
+    user_id = None
+    try:
+        if token:
+            payload = get_current_user_info(token)
+            user_id = payload.get("user_id")
+    except Exception:
+        user_id = None
+
+    scan = models.ScanLog(
+        user_id=user_id,
+        filename=file.filename,
+        filepath=filepath,
+        sha256=file_hash,
+        verdict=verdict,
+        score=str(score),
+        details=f"auto-scanned using deterministic features"
+    )
+    db.add(scan)
+    db.commit()
+    db.refresh(scan)
+
+    return {"filename": file.filename, "verdict": verdict, "score": score, "details": scan.details}
 
 
-@router.post("/file")
-async def scan_file(file: UploadFile = File(...)):
-    # Save temp file
-    suffix = os.path.splitext(file.filename)[1]
-    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-        tmp.write(await file.read())
-        tmp_path = tmp.name
+@router.post("/features", response_model=ScanResponse)
+def scan_from_features(payload: dict, db: Session = Depends(get_db), token: str = Depends(None)):
+    """
+    Accepts a JSON payload: {"values": [float, ...], "filename": "optional"}
+    Useful for agents that already compute features locally.
+    """
+    vals = payload.get("values")
+    filename = payload.get("filename", "uploaded_from_agent")
+    if not vals or not isinstance(vals, (list, tuple)):
+        raise HTTPException(status_code=400, detail="values must be a numeric list")
 
-    # Run detection
-    score, label = predict_file(tmp_path)
+    try:
+        score = predict_malware(vals)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Prediction error: {e}")
 
-    os.remove(tmp_path)
+    verdict = "malicious" if score >= 0.5 else "benign"
+    user_id = None
+    try:
+        if token:
+            payload = get_current_user_info(token)
+            user_id = payload.get("user_id")
+    except Exception:
+        user_id = None
 
-    return {
-        "file_name": file.filename,
-        "malicious": bool(label),
-        "score": score,
-        "confidence": float(score if label else 1 - score),
-    }
+    scan = models.ScanLog(
+        user_id=user_id,
+        filename=filename,
+        filepath="(features-only)",
+        sha256=None,
+        verdict=verdict,
+        score=str(score),
+        details="scanned from features payload"
+    )
+    db.add(scan)
+    db.commit()
+    db.refresh(scan)
+
+    return {"filename": filename, "verdict": verdict, "score": score, "details": scan.details}

@@ -1,33 +1,34 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from app.api import auth_routes, scan_routes, user_routes
+from app.api import auth_routes
+from app.api import auth_utils, predict
 from app.database.base import Base, engine
+from app.core.config import get_settings
+from app.api.auth_routes import router
+from app.api import auth_utils, predict, file_scan, logs
+from app.database.base import Base, engine
+from app.core.config import get_settings
 
+router = auth_routes.router
+
+settings = get_settings()
 # Create DB tables
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="CyberMorph Backend")
+app = FastAPI(title="AI-Based Antivirus & Malware Detection System")
 
-# Allow your frontend origin (adjust if needed)
-origins = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://127.0.0.1:5173",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-app.include_router(auth_routes.router, prefix="/auth", tags=["auth"])
-app.include_router(scan_routes.router, prefix="/scan", tags=["scan"])
-app.include_router(user_routes.router, prefix="/users", tags=["users"])
+# Include Routers
+app.include_router(router)
+app.include_router(predict.router)
+# Authentication & User
+app.include_router(auth_routes.router, prefix="/auth")
+# Malware prediction
+app.include_router(predict.router, prefix="/predict")
+# File scanning
+app.include_router(file_scan.router, prefix="/file")
+# Logs/history
+app.include_router(logs.router, prefix="/logs")
 
 
-@app.get("/")
-def root():
-    return {"message": "CyberMorph backend is running"}
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
