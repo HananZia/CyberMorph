@@ -1,0 +1,97 @@
+/* home.css */
+
+/* --- Theme Variables (Inherited from Global Light Theme) --- */
+:root {
+    --color-primary: #3b82f6;      /* Deep Blue for accents */
+    --color-text-dark: #1f2937;    /* Primary text */
+    --color-border-light: #e5e7eb; /* Light gray border */
+    --color-card-bg: white;
+    --color-background-light: #f4f4f5; /* Off-white */
+}
+
+/* --- Layout --- */
+.homepage-container {
+    background: var(--color-background-light);
+    min-height: 100vh;
+    padding: 100px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.homepage-content {
+    /* Using .card styling for a nice contained block */
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+}
+
+/* --- Typography --- */
+.main-heading {
+    font-size: 3rem; /* text-5xl equivalent */
+    font-weight: 800; /* font-extrabold */
+    color: var(--color-primary); /* Use primary color for main focus */
+    margin-bottom: 10px;
+}
+
+.sub-heading {
+    font-size: 1.15rem; /* text-lg equivalent */
+    color: #4b5563;
+    margin-top: 15px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+/* --- Buttons --- */
+.action-buttons-wrapper {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.action-buttons-wrapper button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.btn-primary-action {
+    background: var(--color-primary);
+    color: white;
+    border: 1px solid var(--color-primary);
+}
+.btn-primary-action:hover {
+    background: #2563eb;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-secondary-action {
+    background: white;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+.btn-secondary-action:hover {
+    background: #eff6ff; /* Light blue tint on hover */
+    color: #2563eb;
+    transform: translateY(-1px);
+}
+
+/* --- Card Base (Duplicated for self-containment) --- */
+.card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border-light);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}

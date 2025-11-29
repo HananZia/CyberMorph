@@ -1,0 +1,43 @@
+/* layout.css - Global Styles for Root Layout */
+
+/* --- Theme Variables (Matching Component Themes) --- */
+:root {
+    --color-primary: #3b82f6;      /* Deep Blue for accents */
+    --color-text-dark: #1f2937;    /* Primary text */
+    --color-border-light: #e5e7eb; /* Light gray border */
+    --color-background-light: #f4f4f5; /* Off-white */
+}
+
+/* Set global fonts and background/text colors */
+.light-theme-body {
+    font-family: 'Inter', sans-serif; /* Assuming Inter is used globally */
+    background: var(--color-background-light);
+    color: var(--color-text-dark);
+    min-height: 100vh;
+}
+
+/* Wrapper to hold header, main, and footer */
+.app-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Main Content Area */
+.main-content {
+    /* Ensures minimum height and pushes footer down */
+    flex-grow: 1; 
+    min-height: 70vh; /* Matches original requirement */
+}
+
+/* Utility for text/headings consistency */
+h1, h2, h3, h4 {
+    color: var(--color-text-dark);
+}
+
+/* Reset default margin/padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

@@ -1,0 +1,514 @@
+/* ------------------------------
+    CYBERMORPH GLOBAL THEME (Light Mode Refit)
+    Clean Light + Deep Blue UI
+--------------------------------*/
+
+/* Google Font */
+@import url('https://fonts.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #__next, .admin-page {
+  font-family: 'Inter', sans-serif;
+  background: #f4f4f5;          /* Light background base (Off-white) */
+  color: #1f2937;               /* Dark text for contrast */
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+/* --- LIGHT THEME COLOR PALETTE --- */
+:root {
+    --color-primary: #3b82f6;      /* Deep Blue for accents */
+    --color-text-dark: #1f2937;    /* Primary text */
+    --color-border-light: #e5e7eb; /* Light gray border */
+    --color-card-bg: white;
+}
+
+
+/* --- LINKS --- */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+a:hover {
+  color: #2563eb;
+  text-shadow: none;
+  text-decoration: underline;
+}
+
+/* --- HEADINGS --- */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+/* --- BUTTONS (Adapted for Light Theme) --- */
+button {
+  font-family: inherit;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  min-width: 100px;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  font-weight: 600;
+}
+.btn-primary:hover {
+    background: #2563eb;
+}
+
+.btn-danger {
+  background: #ef4444; /* Red */
+  color: white;
+  border: 1px solid #ef4444;
+}
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+
+.btn-cancel {
+    background: #f3f4f6; /* Light gray */
+    color: var(--color-text-dark);
+    border: 1px solid #d1d5db;
+}
+.btn-cancel:hover {
+    background: #e5e7eb;
+}
+
+/* --- INPUTS (Adapted for Light Theme) --- */
+input, select, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: var(--color-text-dark);
+  transition: 0.2s;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+}
+
+/* --- CARD / CONTAINER (Adapted for Light Theme) --- */
+.card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border-light);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+/* --- LAYOUT HELPERS (User Provided Base) --- */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* --- DARK GLOW EFFECTS (Replaced with subtle shadow/border) --- */
+.glow {
+  text-shadow: none;
+  color: var(--color-primary); /* Use deep blue for formerly neon text */
+}
+
+.neon-box {
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
+
+/* ==================================
+   ADMIN CONSOLE SPECIFIC STYLES
+   ================================== */
+
+.main-title {
+    font-size: 2.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--color-border-light); /* Solid line separation */
+    color: var(--color-text-dark);
+}
+
+/* --- Loading & Error States --- */
+.loading-state, .error-state {
+    padding: 30px;
+    text-align: center;
+    margin-top: 80px;
+    font-size: 1.2rem;
+    background: white;
+    border: 2px solid var(--color-primary);
+    border-radius: 10px;
+    color: var(--color-primary);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
+.error-state {
+    color: #ef4444;
+    border-color: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+}
+
+
+/* --- Tab Navigation --- */
+.tab-navigation {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.tab-btn {
+    background: #f9fafb;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background: white;
+    transform: none;
+}
+
+.tab-btn.active {
+    background: var(--color-primary);
+    color: white;
+    text-shadow: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    border-color: var(--color-primary);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--color-border-light);
+    color: var(--color-primary);
+}
+
+/* --- Table Styles (Users Tab) --- */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+thead {
+    background-color: #f3f4f6;
+}
+
+th {
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4b5563;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--color-primary);
+}
+
+td {
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    color: var(--color-text-dark);
+    border-bottom: 1px solid #f3f4f6;
+    white-space: nowrap;
+}
+
+tr:hover {
+    background-color: #f9fafb;
+}
+
+.data-id, .data-score {
+    font-family: monospace;
+    color: #4b5563;
+}
+
+.empty-row {
+    text-align: center;
+    color: #9ca3af;
+    padding: 20px;
+}
+
+/* Role Badges */
+.role-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 4px;
+}
+
+.role-badge.admin {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.role-badge.user {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+
+/* --- Scans List Styles --- */
+.scan-list {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.scan-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: white;
+    border: 1px solid var(--color-border-light);
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.scan-item:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.2);
+    background-color: #f9fafb;
+}
+
+.scan-details {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.scan-info strong {
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.scan-score {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.scan-pre {
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #f4f4f5;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #059669; /* Use dark green for console log output */
+    overflow-x: auto;
+    white-space: pre-wrap;
+    max-height: 80px;
+}
+
+/* Verdict Badges */
+.verdict-badge {
+    margin-left: 10px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.verdict-badge.malicious {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+}
+
+.verdict-badge.clean {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.verdict-badge.unknown, .verdict-badge.pending {
+    background-color: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fde68a;
+}
+
+/* --- Stats Grid & Chart Placeholders --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+}
+
+@media (min-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.stat-box {
+    display: flex;
+    align-items: center;
+    padding: 18px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #d1d5db;
+    transition: all 0.3s;
+}
+
+.stat-box:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box.danger {
+    border-left: 5px solid #ef4444;
+}
+.stat-box.success {
+    border-left: 5px solid #10b981;
+}
+.stat-box:not(.danger):not(.success) {
+    border-left: 5px solid var(--color-primary);
+}
+
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-right: 15px;
+    color: var(--color-primary);
+}
+
+.stat-box.danger .stat-icon { color: #ef4444; }
+.stat-box.success .stat-icon { color: #10b981; }
+
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    line-height: 1.2;
+}
+
+.charts-container {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+}
+
+@media (min-width: 1024px) {
+    .charts-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.chart-placeholder-card {
+    border: 1px solid var(--color-border-light);
+    background: white;
+}
+
+.chart-placeholder-box {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9fafb;
+    border: 2px dashed #d1d5db;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: center;
+}
+
+.chart-icon {
+    font-size: 3rem;
+    color: #9ca3af;
+    margin-bottom: 5px;
+}
+
+.chart-label {
+    color: var(--color-text-dark);
+    font-weight: 600;
+}
+
+.chart-description {
+    color: #6b7280;
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+
+/* --- Custom Modal Styles --- */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    min-width: 350px;
+    max-width: 90%;
+    padding: 30px;
+    text-align: center;
+    /* Clean, professional border */
+    border: 1px solid #d1d5db;
+    background: white;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+    color: #ef4444; /* Red for alert */
+    margin-bottom: 10px;
+    text-shadow: none;
+}
+
+.modal-message {
+    font-size: 1rem;
+    color: #4b5563;
+    margin-bottom: 25px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}

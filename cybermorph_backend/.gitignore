@@ -1,0 +1,136 @@
+# ===========================
+#  PYTHON / FASTAPI PROJECT
+# ===========================
+
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+
+# Environment variables
+.env
+.env.*
+
+# ===========================
+#  LOGS & RUNTIME
+# ===========================
+
+*.log
+backend.log
+logs/
+tmp/
+
+# ===========================
+#  DATABASE FILES
+# ===========================
+
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+
+# ===========================
+#  FASTAPI / UVICORN
+# ===========================
+
+reload/
+.hotreload/
+
+# ===========================
+#  MACHINE LEARNING FILES
+# ===========================
+
+# ML models
+*.joblib
+*.pkl
+*.ckpt
+*.bin
+*.model
+ml_lab/models/*.txt
+cybermorph_backend/ml_lab/models/*.txt
+
+# Model directories
+ml_lab/models/
+cybermorph_backend/ml_lab/models/
+ml_lab/checkpoints/
+
+# TensorBoard logs
+runs/
+tensorboard/
+
+# ===========================
+#  DATASETS
+# ===========================
+
+ml_lab/datasets/
+cybermorph_backend/ml_lab/datasets/
+datasets/
+data/
+raw_data/
+downloads/
+
+# ===========================
+#  FILE UPLOADS
+# ===========================
+
+uploads/
+media/
+files/
+*uploads/
+
+# ===========================
+#  BACKEND SCRIPTS
+# ===========================
+
+run.sh
+
+# ===========================
+#  CACHE
+# ===========================
+
+__cache__/
+.cache/
+.python_cache/
+*.tmp
+
+# ===========================
+#  FRONTEND / NODE
+# ===========================
+
+node_modules/
+dist/
+build/
+*.log
+
+# ===========================
+#  OS-LEVEL GARBAGE
+# ===========================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux temp
+*~

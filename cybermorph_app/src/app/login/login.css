@@ -1,0 +1,128 @@
+/* login.css */
+
+/* --- Theme Variables (Matching Dashboard/Admin Theme) --- */
+:root {
+    --color-primary: #3b82f6;      /* Deep Blue for accents */
+    --color-text-dark: #1f2937;    /* Primary text */
+    --color-border-light: #e5e7eb; /* Light gray border */
+    --color-card-bg: white;
+    --color-background-light: #f4f4f5; /* Off-white */
+}
+
+/* --- Container and Layout --- */
+.login-container {
+    background: var(--color-background-light);
+    min-height: 100vh;
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    /* Base styles inherited from .card */
+    max-width: 450px;
+    width: 100%;
+    padding: 30px;
+    border: 1px solid #d1d5db; /* Slightly more defined border */
+    text-align: center;
+}
+
+/* --- Typography and Header --- */
+.login-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+.login-subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+/* --- Form --- */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; 
+    text-align: left;
+}
+
+.form-group {
+    /* Container for label and input */
+}
+
+.form-label {
+    font-size: 0.875rem; 
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #374151;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: var(--color-text-dark);
+    transition: 0.2s;
+    font-size: 1rem;
+}
+.input-field:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+}
+
+
+/* --- Button --- */
+.btn-login {
+    background: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    padding: 12px 20px;
+    width: 100%; 
+    margin-top: 15px;
+    transition: background 0.2s ease;
+}
+.btn-login:hover {
+    background: #2563eb;
+    transform: translateY(0);
+}
+
+.btn-login:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+
+/* --- Error Message --- */
+.error-message {
+    color: #ef4444; 
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* --- Card Base (Duplicated from dashboard.css for self-containment) --- */
+.card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border-light);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}

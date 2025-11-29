@@ -1,0 +1,160 @@
+/* signup.css */
+
+/* --- Theme Variables (Inherited from Global Light Theme) --- */
+:root {
+    --color-primary: #3b82f6;      /* Deep Blue for accents */
+    --color-text-dark: #1f2937;    /* Primary text */
+    --color-border-light: #e5e7eb; /* Light gray border */
+    --color-card-bg: white;
+    --color-background-light: #f4f4f5; /* Off-white */
+    --color-success: #10b981;
+    --color-error: #ef4444;
+}
+
+/* --- Container and Layout (Matching Login Page) --- */
+.signup-container {
+    background: var(--color-background-light);
+    min-height: 100vh;
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-card {
+    /* Base styles inherited from .card */
+    max-width: 450px;
+    width: 100%;
+    padding: 30px;
+    border: 1px solid #d1d5db;
+    text-align: center;
+}
+
+/* --- Typography and Header --- */
+.signup-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+.signup-subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+/* --- Form --- */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Reduced gap slightly for multi-field form */
+    text-align: left;
+}
+
+.form-group {
+    /* Container for label and input */
+}
+
+.form-label {
+    font-size: 0.875rem; 
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #374151;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: var(--color-text-dark);
+    transition: 0.2s;
+    font-size: 1rem;
+}
+.input-field:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+}
+
+
+/* --- Message Box --- */
+.message-box {
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    text-align: center;
+    font-weight: 500;
+}
+.message-box.success {
+    background: #d1fae5; /* Green-100 */
+    color: var(--color-success);
+    border: 1px solid #a7f3d0;
+}
+.message-box.error {
+    background: #fee2e2; /* Red-100 */
+    color: var(--color-error);
+    border: 1px solid #fca5a5;
+}
+.message-box.info {
+    background: #eff6ff; /* Blue-100 */
+    color: var(--color-primary);
+    border: 1px solid #bfdbfe;
+}
+
+
+/* --- Button --- */
+.btn-signup {
+    background: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    padding: 12px 20px;
+    width: 100%; 
+    margin-top: 10px; /* Reduced margin due to smaller gap */
+    transition: background 0.2s ease;
+}
+.btn-signup:hover {
+    background: #2563eb;
+    transform: translateY(0);
+}
+
+.btn-signup:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+
+/* --- Login Link --- */
+.login-link-wrapper {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.login-link {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Card Base (Duplicated for self-containment) --- */
+.card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border-light);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}

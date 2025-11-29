@@ -1,0 +1,48 @@
+# Ensure all text files use LF in the repo, but convert to native line endings on checkout
+* text=auto
+
+# Treat certain file types as binary (no line ending conversion)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.ttf binary
+*.otf binary
+*.mp3 binary
+# Normalize line endings for your source files
+*.js text eol=lf
+*.ts text eol=lf
+*.jsx text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.md text eol=lf
+
+# Exclude node_modules from all line ending handling
+node_modules/** -text
+
+*.mp4 binary
+*.mov binary
+*.pdf binary
+
+# Node_modules should not be checked into Git anyway, but just in case
+node_modules/** binary
+
+# Specific configuration for scripts
+*.js text eol=lf
+*.ts text eol=lf
+*.jsx text eol=lf
+*.tsx text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.json text eol=lf
+
+# Ignore node_modules completely for line endings
+node_modules/** -text
+
+*.md text eol=lf

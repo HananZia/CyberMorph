@@ -1,29 +1,14 @@
 {
   "name": "cybermorph_app",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
-  "devDependencies": {
-    "vite": "^latest"
-  },
-  "description": "",
-  "main": "index.js",
   "dependencies": {
-    "esbuild": "^0.25.12",
-    "fdir": "^6.5.0",
-    "nanoid": "^3.3.11",
-    "picocolors": "^1.1.1",
-    "picomatch": "^4.0.3",
-    "postcss": "^8.5.6",
-    "rollup": "^4.53.3",
-    "source-map-js": "^1.2.1",
-    "tinyglobby": "^0.2.15"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }

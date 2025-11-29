@@ -1,0 +1,194 @@
+/* ------------------------------
+   CYBERMORPH GLOBAL THEME
+   Clean Dark + Neon Cyber UI
+--------------------------------*/
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  background: #0a0a0a;            /* Dark cybersecurity base */
+  color: #eaeaea;
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+/* ------------------------------
+   LINKS
+--------------------------------*/
+a {
+  color: #00d9ff;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+a:hover {
+  color: #74f0ff;
+  text-shadow: 0px 0px 8px rgba(0, 217, 255, 0.6);
+}
+
+/* ------------------------------
+   HEADINGS
+--------------------------------*/
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: #f5f5f5;
+}
+
+/* ------------------------------
+   BUTTONS
+--------------------------------*/
+button {
+  font-family: inherit;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: #00d9ff;
+  color: #000;
+  font-weight: 600;
+}
+
+.btn-danger {
+  background: crimson;
+  color: #fff;
+}
+
+/* ------------------------------
+   INPUTS
+--------------------------------*/
+input, select, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #141414;
+  color: #eaeaea;
+  transition: 0.2s;
+}
+
+input:focus, textarea:focus {
+  border-color: #00d9ff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 217, 255, 0.4);
+}
+
+/* ------------------------------
+   CARD / CONTAINER
+--------------------------------*/
+.card {
+  background: #111;
+  border: 1px solid #222;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+}
+
+/* ------------------------------
+   LAYOUT HELPERS
+--------------------------------*/
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* ------------------------------
+   HEADER STYLE
+--------------------------------*/
+header {
+  background: #0d0d0d;
+  padding: 16px 25px;
+  border-bottom: 1px solid #1b1b1b;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+header nav a {
+  margin-right: 20px;
+  font-weight: 500;
+}
+
+/* ------------------------------
+   FOOTER STYLE
+--------------------------------*/
+footer {
+  background: #0d0d0d;
+  padding: 30px;
+  text-align: center;
+  border-top: 1px solid #1b1b1b;
+  color: #aaa;
+  margin-top: 60px;
+}
+
+footer a {
+  margin: 0 10px;
+  color: #00d9ff;
+}
+
+/* ------------------------------
+   DARK GLOW EFFECTS (Optional)
+--------------------------------*/
+.glow {
+  text-shadow: 0px 0px 12px rgba(0, 217, 255, 0.8);
+}
+
+.neon-box {
+  border: 1px solid #00d9ff;
+  box-shadow: 0 0 12px rgba(0, 217, 255, 0.4);
+}
+
+/* ------------------------------
+   RESPONSIVE
+--------------------------------*/
+@media (max-width: 600px) {
+  header nav a {
+    margin-right: 12px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+/* helpers (append to your globals.css) */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+.card { background: #0b1116; border: 1px solid #111; padding: 18px; border-radius: 10px; }
+.input { width: 100%; padding: 10px 12px; border-radius: 8px; background: #071018; color: #e6f7ff; border: 1px solid #203442; }
+.btn-primary { background: #00d9ff; color: #000; padding: 10px 12px; border-radius: 8px; font-weight: 600; }
