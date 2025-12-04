@@ -126,3 +126,22 @@
 .card:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
+
+.forgot-password-wrapper {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+.forgot-password-link {
+  background: none;
+  border: none;
+  color: #2563eb;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0;
+}
+
+.forgot-password-link:hover {
+  color: #1d4ed8;
+}

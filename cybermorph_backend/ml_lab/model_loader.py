@@ -1,17 +1,18 @@
-import joblib
-import os
+import requests
+from pathlib import Path
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# === CONFIGURATION ===
+MODEL_URL = "https://raw.githubusercontent.com/username/repo/branch/path/to/ann_model.keras"
+SAVE_DIR = Path("F:/CyberMorph/cybermorph_backend/ml_lab/models")  # your desired folder
+SAVE_DIR.mkdir(parents=True, exist_ok=True)
+MODEL_PATH = SAVE_DIR / "ann_model.keras"
 
-def load_pretrained_model(model_name="EMBER_GBDT"):
-    """
-    Loads a pretrained ML model stored inside ml_lab/models/
-    """
-
-    model_path = os.path.join(BASE_DIR, "models", f"{model_name}.pkl")
-
-    if not os.path.exists(model_path):
-        raise FileNotFoundError(f"Pretrained model not found: {model_path}")
-
-    model = joblib.load(model_path)
-    return model
+# === DOWNLOAD MODEL ===
+try:
+    response = requests.get(MODEL_URL)
+    response.raise_for_status()  # raise error if download fails
+    with open(MODEL_PATH, "wb") as f:
+        f.write(response.content)
+    print(f"Model downloaded successfully to: {MODEL_PATH}")
+except Exception as e:
+    print(f"Failed to download model: {e}")

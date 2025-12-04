@@ -1,7 +1,9 @@
 # app/database/models.py
-from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, func
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, func, Boolean
 from sqlalchemy.orm import relationship
+from datetime import datetime
 from app.database.base import Base
+
 
 class User(Base):
     __tablename__ = "users"
@@ -14,6 +16,7 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     scans = relationship("ScanLog", back_populates="user")
+    resets = relationship("PasswordReset", back_populates="user")
 
 
 class ScanLog(Base):
@@ -30,3 +33,14 @@ class ScanLog(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     user = relationship("User", back_populates="scans")
+
+class PasswordReset(Base):
+    __tablename__ = "password_resets"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    code = Column(String(6), index=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    is_used = Column(Boolean, default=False)
+
+    user = relationship("User", back_populates="resets")

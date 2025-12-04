@@ -32,7 +32,6 @@ export default function LoginPage() {
       if (res.role === "admin") {
         router.push("/admin");
       } else {
-        // Redirect standard users to the dashboard
         router.push("/dashboard");
       }
 
@@ -42,6 +41,10 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleForgotPassword() {
+    router.push("/auth/forgot-password");
   }
 
   return (
@@ -74,6 +77,17 @@ export default function LoginPage() {
               className="input-field"
             />
           </div>
+
+          <div className="forgot-password-wrapper">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="forgot-password-link"
+            >
+              Forgot Password?
+            </button>
+          </div>
+
           <button type="submit" disabled={loading} className="btn-login">
             {loading ? "Authenticating…" : "Sign in"}
           </button>
