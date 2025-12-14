@@ -318,7 +318,7 @@ class GeneralFileInfo(FeatureType):
             raw_obj['has_relocations'], raw_obj['has_resources'], raw_obj['has_signature'], raw_obj['has_tls'],
             raw_obj['symbols']
         ],
-                          dtype=np.float32)
+                        dtype=np.float32)
 
 
 class HeaderFileInfo(FeatureType):

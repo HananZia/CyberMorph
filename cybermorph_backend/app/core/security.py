@@ -49,3 +49,17 @@ def get_current_user_info(token: str = Depends(oauth2_scheme)) -> Dict[str, Any]
     if not token:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authorization required")
     return decode_access_token(token)
+
+def admin_required(user: Dict[str, Any] = Depends(get_current_user_info)) -> Dict[str, Any]:
+    """
+    Dependency to allow access only to admin users
+    """
+    role = user.get("role")
+
+    if role != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin privileges required"
+        )
+
+    return user

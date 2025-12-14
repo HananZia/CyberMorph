@@ -6,6 +6,7 @@ from app.database.session import get_db
 from app.database import models
 from app.schemas.user import UserOut
 from app.schemas.scan import ScanResponse
+from app.core.malware import alerts
 from app.core.security import admin_required, get_current_user_info
 
 router = APIRouter(prefix="/admin", tags=["admin"])
@@ -61,6 +62,11 @@ def get_stats(db: Session = Depends(get_db), _p: Dict = Depends(admin_required))
         "threats": threats,
         "users": total_users
     }
+
+@router.get("/alerts")
+def get_alerts():
+    # return latest 20 alerts
+    return alerts[-20:]
 
 
 @router.get("/logs")

@@ -3,8 +3,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 
-# Import routers (each router keeps its own internal prefix, we'll mount under /api)
-from app.api import auth_routes, user_routes, predict, file_scan, scan_routes, logs
+# Import routers
+from app.api import auth_routes, user_routes, predict, file_scan, scan_routes, logs, admin_routes
 
 from app.database.base import Base, engine
 from app.core.config import get_settings
@@ -35,11 +35,21 @@ app.include_router(predict.router, prefix="/api")
 app.include_router(file_scan.router, prefix="/api")
 app.include_router(scan_routes.router, prefix="/api")
 app.include_router(logs.router, prefix="/api")
+app.include_router(admin_routes.router, prefix="/api")
 
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "service": "CyberMorph"}
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to CyberMorph API"}
+
+@app.get("/api/auth")
+async def users():
+    return {"message": "Welcome to CyberMorph API"}
+
 @app.on_event("startup")
 async def on_startup():
     logger.info("CyberMorph startup complete")
+

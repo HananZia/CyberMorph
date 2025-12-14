@@ -1,20 +1,27 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from pathlib import Path
 from app.core.config import get_settings
-import os
 
 settings = get_settings()
-DATABASE_URL = settings.DATABASE_URL
-connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+
+# 🔥 FORCE ABSOLUTE DATABASE PATH
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+DB_PATH = BASE_DIR / "cybermorph.db"
+
+DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(
-    settings.DATABASE_URL,
-    connect_args={"check_same_thread": False}  # only for SQLite; remove for Postgres/MySQL
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}
 )
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
 
-# Dependency for FastAPI routes
 def get_db():
     db = SessionLocal()
     try:

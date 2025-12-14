@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     # ML Model Path
     # ----------------------------
     MODEL_PATH: str = Field(
-    default=r"F:\CyberMorph\cybermorph_backend\ml_lab\models\ember_model_2018.pkl",
+    default=r"F:\CyberMorph\cybermorph_backend\ml_lab\models\ember_model.joblib",
     env="MODEL_PATH"
 )
 
