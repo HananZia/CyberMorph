@@ -23,7 +23,7 @@ export default function AdminPage() {
     fetchUsers: async () => {
       try {
         const res = await api.get("/admin/users");
-        setUsers(Array.isArray(res.data) ? res.data : []);
+        setUsers(Array.isArray(res) ? res : []);
       } catch (err) {
         setUsers([]);
         setError("Failed to fetch users");
@@ -34,7 +34,7 @@ export default function AdminPage() {
     fetchScans: async () => {
       try {
         const res = await api.get("/admin/scans");
-        setScans(Array.isArray(res.data) ? res.data : []);
+        setScans(Array.isArray(res) ? res : []);
       } catch (err) {
         setScans([]);
         setError("Failed to fetch scans");
@@ -45,7 +45,7 @@ export default function AdminPage() {
     fetchStats: async () => {
       try {
         const res = await api.get("/admin/stats");
-        setStats(res.data || null);
+        setStats(res || null);
       } catch (err) {
         setStats(null);
         setError("Failed to fetch stats");
@@ -56,7 +56,7 @@ export default function AdminPage() {
     fetchAlerts: async () => {
       try {
         const res = await api.get("/admin/alerts");
-        setAlerts(Array.isArray(res.data) ? res.data : []);
+        setAlerts(Array.isArray(res) ? res : []);
       } catch (err) {
         setAlerts([]);
         console.error("Failed to fetch alerts", err);
@@ -84,7 +84,6 @@ export default function AdminPage() {
     };
 
     load();
-
     const interval = setInterval(adminApi.fetchAlerts, 5000);
     return () => clearInterval(interval);
   }, [user, router, adminApi]);
@@ -127,11 +126,10 @@ export default function AdminPage() {
         </div>
 
         <div className="tab-content">
-
           {/* USERS */}
           {tab === "users" && (
             <div className="card">
-              <h3 className="card-title">All Users ({users?.length ?? 0})</h3>
+              <h3 className="card-title">All Users ({users.length})</h3>
               <table>
                 <thead>
                   <tr>
@@ -139,9 +137,7 @@ export default function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.length === 0 && (
-                    <tr><td colSpan="5">No users found</td></tr>
-                  )}
+                  {users.length === 0 && <tr><td colSpan="5">No users found</td></tr>}
                   {users.map(u => (
                     <tr key={u.id}>
                       <td>{u.id}</td>
@@ -161,7 +157,7 @@ export default function AdminPage() {
           {/* SCANS */}
           {tab === "scans" && (
             <div className="card">
-              <h3 className="card-title">All Scan Records ({scans?.length ?? 0})</h3>
+              <h3 className="card-title">All Scan Records ({scans.length})</h3>
               {scans.length === 0 && <p>No scans recorded</p>}
               {scans.map(s => (
                 <div key={s.id} className="scan-item">
@@ -179,15 +175,15 @@ export default function AdminPage() {
           {/* ALERTS */}
           {tab === "alerts" && (
             <div className="card">
-              <h3 className="card-title">🚨 Alerts ({alerts?.length ?? 0})</h3>
+              <h3 className="card-title">🚨 Alerts ({alerts.length})</h3>
               {alerts.length === 0 && <p>No alerts</p>}
               {alerts.map((a, i) => (
                 <div key={i} className="alert-item">
                   <strong>{a.filename}</strong>
-                  <span className={`verdict-badge ${a.status?.toLowerCase()}`}>
-                    {a.status}
+                  <span className={`verdict-badge ${a.status?.toLowerCase() || "unknown"}`}>
+                    {a.status || "unknown"}
                   </span>
-                  <span>Probability: {Number(a.prob).toFixed(2)}</span>
+                  <span>Probability: {Number(a.prob ?? 0).toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -203,12 +199,9 @@ export default function AdminPage() {
                   <li>Threats detected: {stats.threats ?? 0}</li>
                   <li>Total users: {stats.users ?? 0}</li>
                 </ul>
-              ) : (
-                <p>No stats available</p>
-              )}
+              ) : <p>No stats available</p>}
             </div>
           )}
-
         </div>
       </div>
     </div>

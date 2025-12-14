@@ -13,8 +13,8 @@ class AgentConfig:
     QUARANTINE_DIR = os.path.join(os.getcwd(), "quarantine")
     LOG_FILE = os.path.join(os.getcwd(), "logs", "agent.log")
 
-    USERNAME = "agent_user"
-    PASSWORD = "agent_password"
+    USERNAME = os.environ.get("AGENT_USERNAME", "agent_user")
+    PASSWORD = os.environ.get("AGENT_PASSWORD", "agent_password")
 
     @staticmethod
     def ensure_dirs():

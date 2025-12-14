@@ -2,6 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import logging
+from app.database import init_db  # noqa: F401
 
 # Import routers
 from app.api import auth_routes, user_routes, predict, file_scan, scan_routes, logs, admin_routes
@@ -12,7 +13,6 @@ from app.core.config import get_settings
 settings = get_settings()
 
 # Create DB tables (idempotent)
-Base.metadata.create_all(bind=engine)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("cybermorph")
@@ -51,5 +51,6 @@ async def users():
 
 @app.on_event("startup")
 async def on_startup():
+    Base.metadata.create_all(bind=engine)
     logger.info("CyberMorph startup complete")
 

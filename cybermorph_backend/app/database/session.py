@@ -5,11 +5,7 @@ from app.core.config import get_settings
 
 settings = get_settings()
 
-# 🔥 FORCE ABSOLUTE DATABASE PATH
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-DB_PATH = BASE_DIR / "cybermorph.db"
-
-DATABASE_URL = f"sqlite:///{DB_PATH}"
+DATABASE_URL = settings.DATABASE_URL
 
 engine = create_engine(
     DATABASE_URL,

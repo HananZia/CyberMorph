@@ -1,25 +1,19 @@
-import threading
-from monitor.system_watcher import start_watcher
-from monitor.file_monitor import file_monitor
+import asyncio
+from monitor.file_monitor import start_watcher
 from monitor.process_monitor import monitor_processes
+from monitor.system_watcher import monitor_system
 from utils.logger import log_info
 
-def main():
+async def main():
     log_info("CyberMorph Agent Starting...")
 
-    t1 = threading.Thread(target=start_watcher, daemon=True)
-    t2 = threading.Thread(target=file_monitor, daemon=True)
-    t3 = threading.Thread(target=monitor_processes, daemon=True)
+    tasks = [
+    start_watcher(),
+    monitor_processes(),
+    monitor_system()
+]
+    await asyncio.gather(*tasks)
 
-    t1.start()
-    t2.start()
-    t3.start()
-
-    log_info("All monitoring modules started.")
-
-    t1.join()
-    t2.join()
-    t3.join()
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

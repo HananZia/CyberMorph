@@ -1,0 +1,13 @@
+2025-12-14 18:05:35,518 — INFO — CyberMorph Agent Starting...
+2025-12-14 18:05:35,522 — INFO — Process Monitor Started.
+2025-12-14 18:05:35,528 — INFO — Watching: C:\Users\hanan\Downloads
+2025-12-14 18:05:35,528 — INFO — [PROCESS DETECTED] 4496 - WMIRegistrationService.exe => C:\Windows\System32\DriverStore\FileRepository\mewmiprov.inf_amd64_2c17521ca0d3f79c\WMIRegistrationService.exe
+2025-12-14 18:05:35,528 — INFO — Scanning file: C:\Windows\System32\DriverStore\FileRepository\mewmiprov.inf_amd64_2c17521ca0d3f79c\WMIRegistrationService.exe
+2025-12-14 18:05:35,534 — INFO — Failed to move to quarantine: [WinError 5] Access is denied: 'C:\\Windows\\System32\\DriverStore\\FileRepository\\mewmiprov.inf_amd64_2c17521ca0d3f79c\\WMIRegistrationService.exe'
+2025-12-14 18:05:35,540 — INFO — System Watcher Started.
+2025-12-14 18:05:36,558 — INFO — High RAM usage detected: 85.4%
+2025-12-14 18:05:43,357 — INFO — High RAM usage detected: 85.4%
+2025-12-14 18:05:50,152 — INFO — High RAM usage detected: 88.7%
+2025-12-14 18:06:30,549 — INFO — High RAM usage detected: 85.1%
+2025-12-14 18:08:39,302 — INFO — CyberMorph Agent Starting...
+2025-12-14 18:08:39,302 — INFO — Watching: C:\Users\hanan\Downloads
