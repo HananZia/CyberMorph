@@ -1,97 +1,280 @@
-/* home.css */
+/* ------------------------------
+    CYBER PROJECT - HOMEPAGE (LANDING)
+    Peak Professional Light Theme + PE File Detection Design
+--------------------------------*/
 
-/* --- Theme Variables (Inherited from Global Light Theme) --- */
+/* --- THEME COLORS & SHADOWS (Consistent Global Style) --- */
 :root {
     --color-primary: #3b82f6;      /* Deep Blue for accents */
-    --color-text-dark: #1f2937;    /* Primary text */
-    --color-border-light: #e5e7eb; /* Light gray border */
+    --color-primary-dark: #2563eb; 
+    --color-text-dark: #1f2937;    
+    --color-text-subtle: #4b5563;  
+    --color-border-light: #e5e7eb; 
     --color-card-bg: white;
-    --color-background-light: #f4f4f5; /* Off-white */
+    --color-page-bg: #f7f7f9;      
+    
+    --shadow-lift: 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.05);
+    
+    /* PE Design Colors */
+    --color-pe-bg: #f0f4f8;        /* Light blue-gray for the visual panel */
+    --color-pe-border: #d1d5db;
+    --color-pe-text: #4b5563;
+    --color-pe-highlight: #065f46; /* Dark green for data/code */
 }
 
-/* --- Layout --- */
-.homepage-container {
-    background: var(--color-background-light);
+/* Global Base */
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-page-bg); 
+    color: var(--color-text-dark);
+}
+
+/* --- HOMEPAGE LAYOUT GRID --- */
+
+.homepage-wrapper {
     min-height: 100vh;
-    padding: 100px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    padding: 60px 20px;
 }
 
-.homepage-content {
-    /* Using .card styling for a nice contained block */
-    max-width: 600px;
+.homepage-grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 1200px;
     width: 100%;
-    padding: 40px;
 }
 
-/* --- Typography --- */
+@media (min-width: 900px) {
+    .homepage-grid-container {
+        /* Two-column layout */
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* --- MAIN CTA PANEL --- */
+
+.main-cta-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    text-align: left;
+}
+
+.main-cta-card {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border-light);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lift); 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align contents left */
+}
+
+.brand-icon {
+    color: var(--color-primary-dark);
+    margin-bottom: 20px;
+}
+
 .main-heading {
-    font-size: 3rem; /* text-5xl equivalent */
-    font-weight: 800; /* font-extrabold */
-    color: var(--color-primary); /* Use primary color for main focus */
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--color-primary-dark);
     margin-bottom: 10px;
+    line-height: 1.1;
 }
 
 .sub-heading {
-    font-size: 1.15rem; /* text-lg equivalent */
-    color: #4b5563;
-    margin-top: 15px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid var(--color-border-light);
+    font-size: 1.15rem;
+    color: var(--color-text-subtle);
+    margin-bottom: 30px;
+    font-weight: 500;
 }
 
-/* --- Buttons --- */
 .action-buttons-wrapper {
-    margin-top: 30px;
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    gap: 15px;
+    width: 100%;
+    margin-top: 10px;
 }
 
-.action-buttons-wrapper button {
-    padding: 12px 24px;
+.btn-cta {
+    font-family: inherit;
+    padding: 14px 25px;
     border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: all 0.2s ease;
     cursor: pointer;
-    min-width: 120px;
+    transition: all 0.2s ease;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
+    min-width: 150px;
 }
 
 .btn-primary-action {
     background: var(--color-primary);
     color: white;
-    border: 1px solid var(--color-primary);
+    border: none;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.4);
 }
 .btn-primary-action:hover {
-    background: #2563eb;
-    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+    background: var(--color-primary-dark);
     transform: translateY(-1px);
 }
 
 .btn-secondary-action {
     background: white;
-    color: var(--color-primary);
+    color: var(--color-primary-dark);
     border: 1px solid var(--color-primary);
 }
 .btn-secondary-action:hover {
-    background: #eff6ff; /* Light blue tint on hover */
-    color: #2563eb;
+    background: #f0f4f8;
     transform: translateY(-1px);
 }
 
-/* --- Card Base (Duplicated for self-containment) --- */
-.card {
-  background: var(--color-card-bg);
-  border: 1px solid var(--color-border-light);
-  padding: 22px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.2s;
+/* --- FEATURE HIGHLIGHTS --- */
+
+.feature-highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
 }
-.card:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+
+.info-box {
+    background: var(--color-card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-subtle);
+}
+
+.info-icon {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.info-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 5px;
+}
+
+.info-description {
+    font-size: 0.85rem;
+    color: var(--color-text-subtle);
+}
+
+
+/* --- RIGHT: PE FILE VISUALIZATION / THEMATIC DESIGN --- */
+
+.visual-panel {
+    padding: 30px;
+    border-radius: 12px;
+    background-color: var(--color-pe-bg);
+    border: 1px solid var(--color-pe-border);
+    box-shadow: var(--shadow-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+    min-height: 500px;
+    text-align: left;
+}
+
+.design-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--color-pe-border);
+    padding-bottom: 10px;
+}
+
+.pe-box {
+    padding: 10px 15px;
+    border: 1px solid var(--color-pe-border);
+    border-left: 5px solid var(--color-primary);
+    border-radius: 6px;
+    background: white;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--color-pe-text);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    transition: all 0.3s;
+}
+
+.pe-box:hover {
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+}
+
+.pe-label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--color-text-dark);
+    text-transform: uppercase;
+}
+
+.pe-detail, .pe-offset {
+    color: var(--color-text-subtle);
+}
+
+/* Specific PE Section Styling */
+.pe-dos-header {
+    border-left-color: #f59e0b; /* Warning color */
+}
+
+.pe-nt-header {
+    border-left-color: var(--color-primary-dark);
+}
+
+.pe-section-header {
+    border-left-color: var(--color-success);
+}
+.section-list {
+    margin-top: 5px;
+    padding-left: 10px;
+}
+.section-item {
+    display: block;
+    color: var(--color-pe-highlight);
+}
+
+.pe-data-section {
+    flex-grow: 1; /* Make the data section visually largest */
+    border-left-color: #ef4444; /* Danger color */
+    background: #fef2f2;
+}
+
+.pe-footer {
+    text-align: center;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    border-top: 2px dashed var(--color-pe-border);
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+/* Responsive adjustment for small screens */
+@media (max-width: 480px) {
+    .main-heading {
+        font-size: 2.2rem;
+    }
+    .action-buttons-wrapper {
+        flex-direction: column;
+    }
 }

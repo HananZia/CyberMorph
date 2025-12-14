@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { api } from "../../../lib/api_helper";
 import './reset.css';
 
 export default function ResetPasswordPage() {
@@ -24,31 +26,26 @@ export default function ResetPasswordPage() {
       return;
     }
 
+    // Retrieve temporary credentials from local storage
     const token = localStorage.getItem("pwResetToken");
     const code = localStorage.getItem("pwResetCode");
     if (!token || !code) {
-      setErrorMsg("Reset token or code missing. Please restart the password reset flow.");
+      setErrorMsg("Reset session expired or incomplete. Please restart the password reset flow.");
+      // Redirect to the start of the flow if tokens are missing
+      router.push("/auth/forgot-password"); 
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/auth/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, code, new_password: password })
-      });
+      const data = await api.post("/auth/reset-password", { token, code, new_password: password });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.detail || data.message || "Failed to reset password.");
-      }
-
+      // Cleanup local storage upon success
       localStorage.removeItem("pwResetToken");
       localStorage.removeItem("pwResetCode");
 
-      alert("Password updated successfully! Please sign in with your new password.");
+      alert("Success! Your password has been updated. Please sign in with your new password.");
       router.push("/login");
 
     } catch (err) {
@@ -59,44 +56,52 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gray-100">
-      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-3 text-center">Reset Password</h2>
-        <p className="text-sm text-gray-600 mb-4 text-center">Enter a new password for your account.</p>
+    <div className="reset-page-wrapper">
+      <div className="auth-card">
+        <h2 className="card-title">Set New Password</h2>
+        <p className="card-description">
+            Your verification code was accepted. Enter and confirm your new, strong password.
+        </p>
 
-        {errorMsg && <div className="bg-red-100 text-red-700 p-2 rounded mb-3 text-sm">{errorMsg}</div>}
+        {errorMsg && <div className="error-message">{errorMsg}</div>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm font-medium block mb-1">New Password</label>
+        <form onSubmit={handleSubmit} className="form-content">
+          <div className="form-group">
+            <label htmlFor="new-password" className="form-label">New Password</label>
             <input
+              id="new-password"
               type="password"
               required
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter new password"
+              className="form-input"
+              placeholder="Minimum 8 characters"
             />
           </div>
-          <div>
-            <label className="text-sm font-medium block mb-1">Confirm Password</label>
+          <div className="form-group">
+            <label htmlFor="confirm-password" className="form-label">Confirm Password</label>
             <input
+              id="confirm-password"
               type="password"
               required
               value={confirm}
               onChange={e => setConfirm(e.target.value)}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Confirm new password"
+              className="form-input"
+              placeholder="Re-enter new password"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 transition text-white rounded py-2 font-medium disabled:opacity-50"
+            className="btn-primary"
           >
-            {loading ? "Updating…" : "Set New Password"}
+            {loading ? "Updating Password..." : "Set New Password"}
           </button>
         </form>
+        
+        <div className="back-link">
+            <Link href="/login">Return to Sign In</Link>
+        </div>
       </div>
     </div>
   );

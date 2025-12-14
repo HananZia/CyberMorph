@@ -1,0 +1,59 @@
+/* ------------------------------
+    CYBER PROJECT - FOOTER STYLING (footer.css)
+    Peak Professional Light Theme Footer
+--------------------------------*/
+
+:root {
+    /* Fallbacks */
+    --color-primary: #3b82f6;
+    --color-text-dark: #1f2937;    
+    --color-border-medium: #d1d5db;
+}
+
+.app-footer {
+    background: var(--color-text-dark); /* Dark bar for contrast */
+    border-top: 5px solid var(--color-primary); /* Primary blue accent line */
+    padding: 30px 0; /* py-8 equivalent, adjust for overall wrapper */
+    margin-top: 40px; /* mt-auto equivalent */
+}
+
+.footer-container {
+    max-width: 1200px; /* container mx-auto */
+    margin: 0 auto;
+    padding: 0 20px; /* px-4 */
+    display: flex;
+    flex-direction: column; /* flex-col */
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* gap-4 */
+    color: #e5e7eb; /* Light text */
+}
+
+@media (min-width: 768px) {
+    .footer-container {
+        flex-direction: row; /* md:flex-row */
+    }
+}
+
+/* --- Copyright Text --- */
+.footer-copyright {
+    font-size: 0.85rem; /* text-sm */
+    color: #9ca3af; /* text-muted-foreground */
+}
+
+/* --- Footer Links --- */
+.footer-links {
+    display: flex;
+    gap: 24px; /* gap-6 */
+}
+
+.footer-link {
+    font-size: 0.85rem; /* text-sm */
+    color: #9ca3af; /* text-muted-foreground */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-link:hover {
+    color: var(--color-primary); /* hover:text-primary */
+}

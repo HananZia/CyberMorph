@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../lib/api_helper";
-import './dashboard.css'; // Import custom CSS
+import './dashboard.css'; 
+// Assuming a modern icon library is available for professional icons
+import { Activity, AlertTriangle, Users, Monitor, LogOut } from 'lucide-react'; 
 
 // Helper component for Stat boxes
-const StatBox = ({ title, value, icon, colorClass }) => (
+const StatBox = ({ title, value, icon: Icon, colorClass }) => (
     <div className={`stat-box ${colorClass}`}>
-        <div className="stat-icon">{icon}</div>
+        <div className="stat-icon-wrapper">
+            <Icon size={20} /> {/* Use the Icon component */}
+        </div>
         <div className="stat-content">
             <p className="stat-label">{title}</p>
             <p className="stat-value">{value ?? "-"}</p>
@@ -38,10 +42,8 @@ export default function DashboardPage() {
         try {
             let res;
             if (user.role === "admin") {
-                // Admin users fetch global stats
                 res = await api.get("/admin/stats");
             } else {
-                // Regular users fetch user-specific stats
                 res = await api.get("/user/stats");
             }
             setStats(res);
@@ -59,64 +61,83 @@ export default function DashboardPage() {
     const totalUsers = user.role === "admin" ? (stats?.users ?? 0) : null;
 
     return (
-        <div className="dashboard-page container">
-            <div className="header-bar">
-                <h1 className="main-title">User Dashboard</h1>
-                <div className="header-actions">
-                    <button onClick={() => router.push("/scan")} className="btn-primary">New Scan</button>
-                    {user.role === "admin" && (
-                        <button onClick={() => router.push("/admin")} className="btn-secondary">Admin Console</button>
-                    )}
-                </div>
-            </div>
-
-            <div className="dashboard-grid">
-                {/* Welcome Card */}
-                <div className="card welcome-card">
-                    <h4 className="card-title">Welcome Back!</h4>
-                    <p className="welcome-text">You are logged in as:</p>
-                    <p className="user-detail">User: <strong className="user-username">{user.username}</strong></p>
-                    <p className="user-detail">Role: <strong className={`role-badge ${user.role}`}>{user.role}</strong></p>
-                </div>
-
-                {/* Stats Card */}
-                <div className="card stats-summary-card">
-                    <h4 className="card-title">Session Overview</h4>
-                    {error && <p className="error-message">{error}</p>}
-
-                    <div className="stats-container">
-                        <StatBox
-                            title="Total Scans"
-                            value={totalScans}
-                            icon="🔍"
-                            colorClass="blue"
-                        />
-                        <StatBox
-                            title="Threats Detected"
-                            value={threatsDetected}
-                            icon="🚨"
-                            colorClass="red"
-                        />
+        <div className="dashboard-page-wrapper"> {/* New wrapper for background and padding */}
+            <div className="dashboard-container"> {/* New max-width container */}
+                
+                <div className="header-bar">
+                    <h1 className="main-title">Cyber Project Dashboard</h1>
+                    <div className="header-actions">
+                        <button onClick={() => router.push("/scan")} className="btn-primary">
+                            New Scan
+                        </button>
                         {user.role === "admin" && (
-                            <StatBox
-                                title="Total Users"
-                                value={totalUsers}
-                                icon="🧑‍💻"
-                                colorClass="green"
-                            />
+                            <button onClick={() => router.push("/admin")} className="btn-secondary">
+                                Admin Console
+                            </button>
                         )}
                     </div>
-
-                    <p className="stat-note">These metrics summarize your recent activity or the system's global status.</p>
                 </div>
 
-                {/* Quick Actions Card */}
-                <div className="card quick-actions-card">
-                    <h4 className="card-title">Quick Access</h4>
-                    <div className="action-buttons">
-                        <button onClick={() => router.push("/scan")} className="btn-primary">New File Scan</button>
-                        <button onClick={() => router.push("/history")} className="btn-secondary">View History</button>
-                        <button onClick={logout} className="btn-logout">Logout</button>
+                <div className="dashboard-grid">
+                    {/* Stats Card (Takes 2/3 width on large screens) */}
+                    <div className="card stats-summary-card">
+                        <h4 className="card-title">Activity Overview</h4>
+                        {error && <p className="error-message">{error}</p>}
+
+                        <div className="stats-container">
+                            <StatBox
+                                title={user.role === 'admin' ? "Total Scans (All Users)" : "Your Total Scans"}
+                                value={totalScans}
+                                icon={Activity} // Lucide Icon
+                                colorClass="blue"
+                            />
+                            <StatBox
+                                title={user.role === 'admin' ? "Global Threats" : "Threats Detected"}
+                                value={threatsDetected}
+                                icon={AlertTriangle} // Lucide Icon
+                                colorClass="red"
+                            />
+                            {user.role === "admin" && (
+                                <StatBox
+                                    title="Total Users"
+                                    value={totalUsers}
+                                    icon={Users} // Lucide Icon
+                                    colorClass="green"
+                                />
+                            )}
+                            {/* Filler Stat Box for Regular User (2-column layout consistency) */}
+                            {user.role !== "admin" && (
+                                <StatBox
+                                    title="System Status"
+                                    value="Operational"
+                                    icon={Monitor} 
+                                    colorClass="green"
+                                />
+                            )}
+                        </div>
+                        <p className="stat-note">Metrics updated automatically from the backend service.</p>
+                    </div>
+
+                    {/* Side Panel (Welcome and Quick Actions) */}
+                    <div className="side-panel-grid">
+                        {/* Welcome Card */}
+                        <div className="card welcome-card">
+                            <h4 className="card-title">Welcome Back, {user.username}!</h4>
+                            <p className="welcome-text">Your Access Details:</p>
+                            <p className="user-detail">Role: <strong className={`role-badge ${user.role}`}>{user.role}</strong></p>
+                        </div>
+                        
+                        {/* Quick Actions Card */}
+                        <div className="card quick-actions-card">
+                            <h4 className="card-title">Quick Actions</h4>
+                            <div className="action-buttons">
+                                <button onClick={() => router.push("/scan")} className="btn-primary">New File Scan</button>
+                                <button onClick={() => router.push("/history")} className="btn-secondary">View Scan History</button>
+                                <button onClick={logout} className="btn-logout">
+                                    <LogOut size={18}/> Logout
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

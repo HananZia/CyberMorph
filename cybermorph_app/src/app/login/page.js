@@ -3,7 +3,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "../../lib/api_helper";
 import { useAuth } from "../../context/AuthContext";
-import './login.css'; // Import custom CSS
+import './login.css'; 
+import { LogIn, Lock, Mail } from 'lucide-react'; // Icons for professional touch
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -20,7 +21,7 @@ export default function LoginPage() {
 
     try {
       const res = await api.post("/auth/login", { username, password });
-      // res: { access_token, token_type, expires_in, user_id, role }
+      
       login({
         token: res.access_token,
         username,
@@ -37,7 +38,8 @@ export default function LoginPage() {
 
     } catch (err) {
       console.error(err);
-      setError(err?.data?.detail || err.message || "Login failed");
+      // Use a friendlier message for general login failure
+      setError(err?.data?.detail || "Invalid username or password. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -48,50 +50,76 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="login-container">
-      <div className="login-card card">
-        <h2 className="login-title">Sign in to the System</h2>
-        <p className="login-subtitle">Enter your credentials to access the security dashboard.</p>
+    <div className="auth-page-wrapper"> {/* Consistent wrapper */}
+      <div className="login-card auth-card"> {/* Consistent card styling */}
+        
+        <h2 className="card-title">Sign In</h2>
+        <p className="card-description">
+            Access your Cyber Project Dashboard and security tools.
+        </p>
 
         {error && <div className="error-message">{error}</div>}
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="form-content">
           <div className="form-group">
             <label htmlFor="username-input" className="form-label">Username or Email</label>
-            <input
-              id="username-input"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              required
-              className="input-field"
-            />
+            <div className="input-with-icon">
+                <Mail size={18} className="input-icon" />
+                <input
+                    id="username-input"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    required
+                    className="form-input"
+                    placeholder="Enter username or email"
+                />
+            </div>
           </div>
           <div className="form-group">
             <label htmlFor="password-input" className="form-label">Password</label>
-            <input
-              id="password-input"
-              type="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-              className="input-field"
-            />
+            <div className="input-with-icon">
+                <Lock size={18} className="input-icon" />
+                <input
+                    id="password-input"
+                    type="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required
+                    className="form-input"
+                    placeholder="Enter your password"
+                />
+            </div>
           </div>
 
           <div className="forgot-password-wrapper">
             <button
               type="button"
               onClick={handleForgotPassword}
-              className="forgot-password-link"
+              className="forgot-password-link btn-link"
             >
               Forgot Password?
             </button>
           </div>
 
-          <button type="submit" disabled={loading} className="btn-login">
-            {loading ? "Authenticating…" : "Sign in"}
+          <button type="submit" disabled={loading} className="btn-primary btn-login">
+            {loading ? (
+                <>
+                    <LogIn size={20} />
+                    Authenticating…
+                </>
+            ) : (
+                <>
+                    <LogIn size={20} />
+                    Sign In
+                </>
+            )}
           </button>
         </form>
+        
+        <div className="auth-footer-link">
+            {/* Placeholder for Signup/Registration link */}
+            Don't have an account? <a href="/signup">Register here</a>
+        </div>
       </div>
     </div>
   );

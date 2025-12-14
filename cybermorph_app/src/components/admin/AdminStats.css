@@ -1,0 +1,160 @@
+/* ------------------------------
+    ADMIN STATS COMPONENT STYLES (AdminStats.css)
+    Consistent with Admin Console Peak Theme
+--------------------------------*/
+
+/* --- THEME COLORS & VARIABLES (Referred from Global Styles) --- */
+:root {
+    --color-primary: #3b82f6;      
+    --color-primary-dark: #2563eb; 
+    --color-text-dark: #1f2937;    
+    --color-text-subtle: #4b5563;  
+    --color-border-light: #e5e7eb; 
+    --color-card-bg: white;
+    --color-danger: #ef4444;       
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-info: #3b82f6;
+    
+    --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Component Card and Title Styling --- */
+.admin-stats-card {
+    /* Inherits .card styles (background, shadow, padding) from global CSS */
+    padding: 25px 30px;
+}
+
+.card-title-mini {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border-light);
+    color: var(--color-text-dark);
+    display: flex;
+    align-items: center;
+}
+
+.card-title-mini .title-icon {
+    margin-right: 10px;
+    color: var(--color-primary);
+}
+
+
+/* --- Loading & No Stats States --- */
+.loading-state, .no-stats-state {
+    padding: 30px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--color-text-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.loading-state {
+    color: var(--color-primary-dark);
+}
+
+.no-stats-state .icon-info {
+    color: var(--color-primary);
+}
+
+.spinner {
+    animation: spin 1.5s linear infinite;
+    color: var(--color-primary);
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+/* --- Stats Grid Layout --- */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+}
+
+@media (min-width: 600px) {
+    .stats-grid {
+        /* Use 2 columns on medium screens */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 900px) {
+    .stats-grid {
+        /* Use 4 columns on large screens for density */
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* --- Stat Box Styles (Peak Design) --- */
+
+.stat-box {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    background: #fcfcfd; /* Very subtle light background */
+    border: 1px solid var(--color-border-light);
+    transition: all 0.2s;
+    box-shadow: var(--shadow-subtle);
+    border-left: 5px solid transparent; /* Placeholder for status indicator */
+}
+
+.stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon-wrapper {
+    margin-right: 15px;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--color-text-subtle);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-text-dark);
+    line-height: 1.2;
+}
+
+/* Type Specific Indicators */
+.stat-box.danger { border-left-color: var(--color-danger); }
+.stat-box.danger .stat-icon-wrapper { background-color: #fef2f2; color: var(--color-danger); }
+
+.stat-box.success { border-left-color: var(--color-success); }
+.stat-box.success .stat-icon-wrapper { background-color: #ecfdf5; color: var(--color-success); }
+
+.stat-box.primary { border-left-color: var(--color-primary); }
+.stat-box.primary .stat-icon-wrapper { background-color: #eff6ff; color: var(--color-primary); }
+
+.stat-box.info { border-left-color: var(--color-warning); }
+.stat-box.info .stat-icon-wrapper { background-color: #fef3c7; color: var(--color-warning); }
+
+
+/* --- Footer Note --- */
+.stats-footer-note {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    padding-top: 15px;
+    margin-top: 20px;
+    border-top: 1px dashed var(--color-border-light);
+}

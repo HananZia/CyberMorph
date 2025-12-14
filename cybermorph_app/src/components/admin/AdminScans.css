@@ -1,0 +1,178 @@
+/* ------------------------------
+    ADMIN SCANS LOG STYLES (AdminScans.css)
+    Consistent with Admin Console Peak Theme
+--------------------------------*/
+
+/* --- THEME COLORS & VARIABLES (Referred from Global Styles) --- */
+:root {
+    --color-primary: #3b82f6;      
+    --color-primary-dark: #2563eb; 
+    --color-text-dark: #1f2937;    
+    --color-text-subtle: #4b5563;  
+    --color-border-light: #e5e7eb; 
+    --color-card-bg: white;
+    --color-danger: #ef4444;       
+    --color-danger-bg: #fef2f2;    
+    --color-success: #10b981;
+    --color-success-bg: #ecfdf5;
+    --color-warning: #f59e0b;
+    --color-warning-bg: #fef3c7;
+}
+
+
+/* --- Component Card and Title Styling --- */
+.admin-scans-card {
+    padding: 25px 30px;
+}
+
+.card-title-mini {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border-light);
+    color: var(--color-text-dark);
+    display: flex;
+    align-items: center;
+}
+
+.card-title-mini .title-icon {
+    margin-right: 10px;
+    color: var(--color-primary);
+}
+
+
+/* --- Loading & Error States --- */
+.loading-state, .error-state {
+    padding: 30px;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.loading-state { color: var(--color-primary-dark); }
+.error-state { 
+    color: var(--color-danger);
+    border: 1px solid var(--color-danger);
+    background-color: var(--color-danger-bg);
+}
+
+.spinner {
+    animation: spin 1.5s linear infinite;
+    color: var(--color-primary);
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+/* --- Table Wrapper (for responsiveness) --- */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.scans-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+/* --- Table Head --- */
+.scans-table thead {
+    background-color: #f8fafc;
+}
+
+.scans-table th {
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-subtle);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--color-primary);
+    white-space: nowrap;
+}
+
+/* Column Widths */
+.th-id { width: 50px; }
+.th-score { width: 100px; }
+.th-date { width: 150px; }
+.th-actions { width: 100px; text-align: center; }
+
+
+/* --- Table Body --- */
+.scans-table td {
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    color: var(--color-text-dark);
+    border-bottom: 1px solid #f3f4f6;
+    white-space: nowrap;
+}
+
+.scans-table tbody tr:hover {
+    background-color: #fcfcfd;
+}
+
+.data-id, .data-date, .data-score {
+    font-family: monospace;
+    color: var(--color-text-subtle);
+}
+
+.empty-row {
+    text-align: center;
+    color: #9ca3af;
+    padding: 20px;
+}
+
+/* --- Verdict Status Badges (Crucial Visuals) --- */
+.verdict-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 6px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.verdict-badge.malicious {
+    background-color: var(--color-danger-bg); 
+    color: var(--color-danger);            
+    border: 1px solid var(--color-danger);
+}
+
+.verdict-badge.clean {
+    background-color: var(--color-success-bg); 
+    color: var(--color-success);            
+    border: 1px solid var(--color-success);
+}
+
+.verdict-badge.pending, .verdict-badge.unknown {
+    background-color: var(--color-warning-bg); 
+    color: var(--color-warning);            
+    border: 1px solid var(--color-warning);
+}
+
+/* --- Delete Button (Icon-only) --- */
+.btn-delete {
+    background: var(--color-danger-bg); 
+    color: var(--color-danger);      
+    padding: 8px; 
+    min-width: unset;
+    border: 1px solid #fee2e2;
+    margin: auto;
+    display: block;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    background: var(--color-danger);
+    color: white;
+    transform: none;
+}

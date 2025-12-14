@@ -2,17 +2,21 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { api } from "../../../lib/api_helper";
 import './forgot.css';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setErrorMsg("");
+    setSuccessMsg("");
 
     if (!email.trim()) {
       setErrorMsg("Please enter your email.");
@@ -22,65 +26,62 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/auth/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
-      });
+      const data = await api.post("/auth/forgot-password", { email });
 
-      const data = await res.json();
+      // Save token if returned
+      if (data.token) localStorage.setItem("pwResetToken", data.token);
 
-      if (!res.ok) {
-        throw new Error(data.detail || data.message || "Unable to send verification code.");
-      }
-
-      // Save token from backend
-      if (data.token) {
-        localStorage.setItem("pwResetToken", data.token);
-      }
-
-      alert("A 6-digit verification code has been sent to your email.");
-      router.push("/auth/verify-code");
+      setSuccessMsg("Success! Check your inbox. A 6-digit verification code has been sent.");
+      
+      // Small delay to show success message before redirect
+      setTimeout(() => {
+        router.push("auth/verify-code");
+      }, 1500);
 
     } catch (err) {
-      setErrorMsg(err.message || "Something went wrong.");
+      setErrorMsg(err.message || "Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gray-100">
-      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-3 text-center">Forgot Password</h2>
-        <p className="text-sm text-gray-600 mb-4 text-center">
-          Enter your email and we'll send you a 6-digit verification code.
+    <div className="reset-page-wrapper">
+      <div className="auth-card">
+        <h2 className="card-title">Password Reset</h2>
+        <p className="card-description">
+          Enter your email below. We'll send a 6-digit verification code to reset your password.
         </p>
 
-        {errorMsg && (
-          <div className="bg-red-100 text-red-700 p-2 rounded mb-3 text-sm">{errorMsg}</div>
-        )}
+        {errorMsg && <div className="error-message">{errorMsg}</div>}
+        {successMsg && <div className="success-message">{successMsg}</div>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm font-medium block mb-1">Email</label>
+        <form onSubmit={handleSubmit} className="form-content">
+          <div className="form-group">
+            <label htmlFor="email-input" className="form-label">Email Address</label>
             <input
+              id="email-input"
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="you@example.com"
+              className="form-input"
+              placeholder="e.g., you@cyberproject.com"
             />
           </div>
+
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 transition text-white rounded py-2 font-medium disabled:opacity-50"
+            className="btn-primary"
           >
-            {loading ? "Sending…" : "Send Reset Code"}
+            {loading ? "Sending Code..." : "Send Reset Code"}
           </button>
         </form>
+
+        <div className="back-link">
+          <Link href="/login">Back to Login</Link>
+        </div>
       </div>
     </div>
   );
