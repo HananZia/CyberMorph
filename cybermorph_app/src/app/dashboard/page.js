@@ -1,17 +1,16 @@
 'use client'
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../lib/api_helper";
 import './dashboard.css'; 
-// Assuming a modern icon library is available for professional icons
 import { Activity, AlertTriangle, Users, Monitor, LogOut } from 'lucide-react'; 
 
-// Helper component for Stat boxes
 const StatBox = ({ title, value, icon: Icon, colorClass }) => (
     <div className={`stat-box ${colorClass}`}>
         <div className="stat-icon-wrapper">
-            <Icon size={20} /> {/* Use the Icon component */}
+            <Icon size={20} />
         </div>
         <div className="stat-content">
             <p className="stat-label">{title}</p>
@@ -26,7 +25,6 @@ export default function DashboardPage() {
     const [error, setError] = useState("");
     const router = useRouter();
 
-    // Fetch stats on user change
     useEffect(() => {
         if (!loading && !user) {
             router.push("/login");
@@ -37,32 +35,36 @@ export default function DashboardPage() {
         }
     }, [user, loading]);
 
-    // Fetch stats function
     async function fetchStats() {
         try {
             let res;
             if (user.role === "admin") {
-                res = await api.get("/admin/stats");
-            } else {
+                // Admin: global stats
                 res = await api.get("/user/stats");
+            } else {
+                // Regular user: only their stats
+                res = await api.get("/user/my-stats");
             }
+
+            // For fetch wrapper, you may not need `.data` depending on api_helper
             setStats(res);
+            setError("");
         } catch (err) {
-            setError("Failed to load stats");
             console.error(err);
+            setError(err.message || "Failed to load stats");
         }
     }
 
     if (!user) return <div className="loading-state container">Checking session…</div>;
 
     // Safe values with fallback
-    const totalScans = stats ? (stats.total_scans ?? stats.total ?? "—") : "—";
-    const threatsDetected = stats ? (stats.threats ?? "—") : "—";
-    const totalUsers = user.role === "admin" ? (stats?.users ?? 0) : null;
+    const totalScans = stats?.total_scans ?? stats?.total ?? "—";
+    const threatsDetected = stats?.threats ?? "—";
+    const totalUsers = user.role === "admin" ? (stats?.total_users ?? stats?.users ?? 0) : null;
 
     return (
-        <div className="dashboard-page-wrapper"> {/* New wrapper for background and padding */}
-            <div className="dashboard-container"> {/* New max-width container */}
+        <div className="dashboard-page-wrapper">
+            <div className="dashboard-container">
                 
                 <div className="header-bar">
                     <h1 className="main-title">Cyber Project Dashboard</h1>
@@ -79,7 +81,6 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="dashboard-grid">
-                    {/* Stats Card (Takes 2/3 width on large screens) */}
                     <div className="card stats-summary-card">
                         <h4 className="card-title">Activity Overview</h4>
                         {error && <p className="error-message">{error}</p>}
@@ -88,24 +89,23 @@ export default function DashboardPage() {
                             <StatBox
                                 title={user.role === 'admin' ? "Total Scans (All Users)" : "Your Total Scans"}
                                 value={totalScans}
-                                icon={Activity} // Lucide Icon
+                                icon={Activity}
                                 colorClass="blue"
                             />
                             <StatBox
                                 title={user.role === 'admin' ? "Global Threats" : "Threats Detected"}
                                 value={threatsDetected}
-                                icon={AlertTriangle} // Lucide Icon
+                                icon={AlertTriangle}
                                 colorClass="red"
                             />
                             {user.role === "admin" && (
                                 <StatBox
                                     title="Total Users"
                                     value={totalUsers}
-                                    icon={Users} // Lucide Icon
+                                    icon={Users}
                                     colorClass="green"
                                 />
                             )}
-                            {/* Filler Stat Box for Regular User (2-column layout consistency) */}
                             {user.role !== "admin" && (
                                 <StatBox
                                     title="System Status"
@@ -118,16 +118,15 @@ export default function DashboardPage() {
                         <p className="stat-note">Metrics updated automatically from the backend service.</p>
                     </div>
 
-                    {/* Side Panel (Welcome and Quick Actions) */}
                     <div className="side-panel-grid">
-                        {/* Welcome Card */}
                         <div className="card welcome-card">
                             <h4 className="card-title">Welcome Back, {user.username}!</h4>
                             <p className="welcome-text">Your Access Details:</p>
-                            <p className="user-detail">Role: <strong className={`role-badge ${user.role}`}>{user.role}</strong></p>
+                            <p className="user-detail">
+                                Role: <strong className={`role-badge ${user.role}`}>{user.role}</strong>
+                            </p>
                         </div>
                         
-                        {/* Quick Actions Card */}
                         <div className="card quick-actions-card">
                             <h4 className="card-title">Quick Actions</h4>
                             <div className="action-buttons">

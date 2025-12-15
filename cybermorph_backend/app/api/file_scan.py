@@ -6,6 +6,7 @@ import logging
 
 from app.core.config import get_settings
 from app.core.malware import predict_malware
+from app.schemas.scan import FileScanResult
 from app.core.validators import is_pe_file
 
 router = APIRouter()
@@ -26,7 +27,7 @@ logging.basicConfig(
 detection_logger = logging.getLogger("detections")
 
 
-@router.post("/scan")
+@router.post("/scan", response_model=FileScanResult)
 async def scan_file(file: UploadFile = File(...)):
     if not file.filename:
         raise HTTPException(status_code=400, detail="No file uploaded")
@@ -79,9 +80,9 @@ async def scan_file(file: UploadFile = File(...)):
             os.remove(file_path)
 
         return {
-            "filename": file.filename,
-            "malware_probability": round(float(malware_prob), 4),
-            "status": status
+        "filename": file.filename,
+        "malware_probability": round(float(malware_prob), 4),
+        "status": status
         }
 
     except HTTPException:

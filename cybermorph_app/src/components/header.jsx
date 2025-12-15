@@ -4,12 +4,14 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+// Assuming the professional CSS is in a module named 'header.module.css'
+// Note: If you insist on 'header.css' being imported as 'styles',
+// the import must match your file system setup.
 import './header.css';
-import { Shield, LayoutDashboard, Search, UserPlus, LogIn, LogOut, KeyRound } from 'lucide-react';
 
 export default function Header() {
   const { user, logout } = useAuth();
-  const pathname = usePathname(); // replaces Wouter's location
+  const pathname = usePathname();
   const router = useRouter();
 
   function handleLogout() {
@@ -17,33 +19,50 @@ export default function Header() {
     router.push('/login');
   }
 
+  // Helper for conditional styling
   const isActive = (path) => pathname === path;
 
   return (
     <header className="app-header">
       <div className="header-container">
 
-        {/* Logo & Brand */}
+        {/* Logo & Brand - Cleaned up to match the professional CSS */}
         <div className="header-brand-section">
           <Link href="/" className="logo-link">
-            <Shield size={24} className="logo-icon" />
+            {/* The previous version had a non-existent logoIcon class; removed for professionalism */}
             <span className="logo-text">CyberShield Pro</span>
           </Link>
 
           {/* Main Navigation */}
           <nav className="nav-links-wrapper">
-            <Link href="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>Home</Link>
+            <Link 
+              href="/" 
+              // Use the dynamic class helper function
+              className={`nav-link ${isActive('/') ? 'active' : ''}`}
+            >
+              Home
+            </Link>
             {user && (
               <>
-                <Link href="/dashboard" className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}>
-                  <LayoutDashboard size={16} className="nav-icon"/> Dashboard
+                <Link 
+                  href="/dashboard" 
+                  className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}
+                >
+                  Dashboard
                 </Link>
-                <Link href="/scan" className={`nav-link ${isActive('/scan') ? 'active' : ''}`}>
-                  <Search size={16} className="nav-icon"/> Scan File
+                <Link 
+                  href="/scan" 
+                  className={`nav-link ${isActive('/scan') ? 'active' : ''}`}
+                >
+                  Scan File
                 </Link>
                 {user.role === 'admin' && (
-                  <Link href="/admin" className={`nav-link admin-link ${isActive('/admin') ? 'active' : ''}`}>
-                    <KeyRound size={16} className="nav-icon"/> Admin
+                  <Link 
+                    href="/admin" 
+                    // Use the specific admin-link class for visual distinction
+                    className={`nav-link admin-link ${isActive('/admin') ? 'active' : ''}`}
+                  >
+                    Admin
                   </Link>
                 )}
               </>
@@ -55,18 +74,21 @@ export default function Header() {
         <div className="header-actions">
           {user ? (
             <div className="user-profile-actions">
-              <span className="user-greeting">Hi, <strong className="user-username">{user.username}</strong></span>
+              <span className="user-greeting">Welcome, 
+                <strong className="user-username"> {user.username}</strong>
+              </span>
               <button onClick={handleLogout} className="btn-logout-header">
-                <LogOut size={18} /> Logout
+                Logout
               </button>
             </div>
           ) : (
             <div className="auth-buttons-wrapper">
+              {/* Used specific class names from the refined CSS for Login/Signup */}
               <Link href="/login" className="btn-auth-link">
-                <LogIn size={18} /> Login
+                Login
               </Link>
               <Link href="/signup" className="btn-primary-header">
-                <UserPlus size={18} /> Sign up
+                Sign up
               </Link>
             </div>
           )}

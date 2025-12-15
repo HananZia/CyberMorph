@@ -4,8 +4,11 @@ import { useEffect, useState, useMemo } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../lib/api_helper";
 import { useRouter } from "next/navigation";
-import './styles.css'; // Your revised CSS will be here
-import { Trash2, User, Activity, Bell, BarChart } from 'lucide-react'; // Using Lucide for modern icons
+import './styles.css'; 
+import { Trash2, User, Activity, Bell, BarChart as ChartIcon } from 'lucide-react';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
 
 // Helper to format date
 const formatDate = (dateString) => {
@@ -14,12 +17,10 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-// Component to display an individual Stat box (new structure)
+// Component to display an individual Stat box
 const StatBox = ({ icon, label, value, type = "default" }) => (
   <div className={`stat-box ${type}`}>
-    <div className="stat-icon-wrapper">
-      {icon}
-    </div>
+    <div className="stat-icon-wrapper">{icon}</div>
     <div className="stat-content">
       <div className="stat-label">{label}</div>
       <div className="stat-value">{value}</div>
@@ -31,18 +32,20 @@ export default function AdminPage() {
   const { user } = useAuth();
   const router = useRouter();
 
-  const [tab, setTab] = useState("stats"); // Default to stats for an overview
+  const [tab, setTab] = useState("stats");
   const [users, setUsers] = useState([]);
   const [scans, setScans] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [stats, setStats] = useState(null);
 
+  const [scanVolumeData, setScanVolumeData] = useState([]);
+  const [userActivityData, setUserActivityData] = useState([]);
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  // Memoize API functions to be stable dependencies for useEffect
+  // Memoize API functions
   const adminApi = useMemo(() => ({
-    // ... (All fetch functions remain the same)
     fetchUsers: async () => {
       try {
         const res = await api.get("/admin/users");
@@ -82,11 +85,28 @@ export default function AdminPage() {
         setAlerts(Array.isArray(res) ? res : []);
       } catch (err) {
         setAlerts([]);
-        // Do not overwrite global error for a minor background fetch failure
         console.error("Failed to fetch alerts", err);
       }
     }
   }), []);
+
+  // Compute chart data
+  const computeCharts = () => {
+    // Daily Scan Volume
+    const dailyCounts = scans.reduce((acc, scan) => {
+      const date = new Date(scan.timestamp).toLocaleDateString();
+      acc[date] = (acc[date] || 0) + 1;
+      return acc;
+    }, {});
+    setScanVolumeData(Object.entries(dailyCounts).map(([date, count]) => ({ date, count })));
+
+    // User Activity by Role
+    const roleCounts = users.map(user => {
+      const userScans = scans.filter(s => s.user_id === user.id).length;
+      return { username: user.username, role: user.role, scans: userScans };
+    });
+    setUserActivityData(roleCounts);
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -108,10 +128,19 @@ export default function AdminPage() {
     };
 
     load();
-    // Fetch alerts every 5 seconds (5000ms)
-    const interval = setInterval(adminApi.fetchAlerts, 5000);
+    // Real-time alerts and chart updates
+    const interval = setInterval(async () => {
+      await adminApi.fetchScans();
+      await adminApi.fetchAlerts();
+    }, 5000);
+
     return () => clearInterval(interval);
   }, [user, router, adminApi]);
+
+  // Recompute charts whenever scans or users update
+  useEffect(() => {
+    computeCharts();
+  }, [scans, users]);
 
   async function deleteUser(id) {
     if (!confirm("Are you sure you want to permanently delete this user?")) return;
@@ -139,13 +168,13 @@ export default function AdminPage() {
   if (error) return <div className="error-state">Error: {error}</div>;
 
   return (
-    <div className="admin-page-wrapper"> {/* New wrapper for background */}
+    <div className="admin-page-wrapper">
       <div className="admin-console">
         <h1 className="main-title">🛡️ Cyber Project Admin Panel</h1>
 
         <div className="tab-navigation">
           <button className={tab === "stats" ? "tab-btn active" : "tab-btn"} onClick={() => setTab("stats")}>
-            <BarChart size={18} className="icon-left"/> System Stats
+            <ChartIcon size={18} className="icon-left"/> System Stats
           </button>
           <button className={tab === "users" ? "tab-btn active" : "tab-btn"} onClick={() => setTab("users")}>
             <User size={18} className="icon-left"/> Users ({users.length})
@@ -159,51 +188,51 @@ export default function AdminPage() {
         </div>
 
         <div className="tab-content">
-          
-          {/* STATS OVERVIEW TAB (Default/First view) */}
+          {/* STATS TAB */}
           {tab === "stats" && (
             <div className="tab-section stats-grid-layout">
               <h3 className="card-title">System Overview</h3>
-              {stats ? (
+              {stats && (
                 <div className="stats-grid">
-                  <StatBox 
-                    icon={<Activity />} 
-                    label="Total Scans" 
-                    value={stats.total_scans ?? 0} 
-                    type="primary"
-                  />
-                  <StatBox 
-                    icon={<Bell />} 
-                    label="Threats Detected" 
-                    value={stats.threats ?? 0} 
-                    type="danger"
-                  />
-                  <StatBox 
-                    icon={<User />} 
-                    label="Total Users" 
-                    value={stats.users ?? 0} 
-                    type="success"
-                  />
+                  <StatBox icon={<Activity />} label="Total Scans" value={stats.total_scans ?? 0} type="primary" />
+                  <StatBox icon={<Bell />} label="Threats Detected" value={stats.threats ?? 0} type="danger" />
+                  <StatBox icon={<User />} label="Total Users" value={stats.users ?? 0} type="success" />
                 </div>
-              ) : <p className="no-data-msg">No system statistics available.</p>}
-              
-              {/* Placeholder for future charts */}
+              )}
+
               <div className="charts-container">
-                <div className="card chart-placeholder-card">
+                {/* Daily Scan Volume */}
+                <div className="card chart-card">
                   <h3 className="card-title-mini">Daily Scan Volume</h3>
-                  <div className="chart-placeholder-box">
-                    <BarChart size={36} className="chart-icon"/>
-                    <span className="chart-label">Chart Integration Pending</span>
-                    <span className="chart-description">Placeholder for future data visualization.</span>
-                  </div>
+                  {scanVolumeData.length > 0 ? (
+                    <ResponsiveContainer width="100%" height={250}>
+                      <BarChart data={scanVolumeData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="count" fill="#1f77b4" name="Scans" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : <p className="no-data-msg">No scan data available</p>}
                 </div>
-                <div className="card chart-placeholder-card">
+
+                {/* User Activity by Role */}
+                <div className="card chart-card">
                   <h3 className="card-title-mini">User Activity by Role</h3>
-                  <div className="chart-placeholder-box">
-                    <User size={36} className="chart-icon"/>
-                    <span className="chart-label">Chart Integration Pending</span>
-                    <span className="chart-description">Placeholder for future data visualization.</span>
-                  </div>
+                  {userActivityData.length > 0 ? (
+                    <ResponsiveContainer width="100%" height={250}>
+                      <BarChart data={userActivityData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="username" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="scans" fill="#82ca9d" name="Scans" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : <p className="no-data-msg">No user activity data available</p>}
                 </div>
               </div>
             </div>
@@ -230,9 +259,7 @@ export default function AdminPage() {
                       <td className="data-id">{u.id}</td>
                       <td>{u.username}</td>
                       <td>{u.email}</td>
-                      <td>
-                        <span className={`role-badge ${u.role?.toLowerCase()}`}>{u.role}</span>
-                      </td>
+                      <td><span className={`role-badge ${u.role?.toLowerCase()}`}>{u.role}</span></td>
                       <td>
                         <button className="btn-delete" onClick={() => deleteUser(u.id)} title="Delete User">
                           <Trash2 size={16} />
@@ -287,6 +314,7 @@ export default function AdminPage() {
               ))}
             </div>
           )}
+
         </div>
       </div>
     </div>

@@ -1,162 +1,183 @@
-/* ------------------------------
+/* -------------------------------------------
     CYBER PROJECT - HEADER STYLING (header.css)
-    Peak Professional Light Theme Navigation
---------------------------------*/
+    Peak Professional Light Theme Navigation - V2
+---------------------------------------------*/
 
-/* --- Theme Variables (Imported from layout.css/global context) --- */
-/* Fallbacks, assume defined in :root or imported globally */
-:root {
-    --color-primary: #3b82f6;
-    --color-primary-dark: #2563eb; 
-    --color-text-dark: #1f2937;    
-    --color-text-subtle: #6b7280;  
-    --color-border-light: #e5e7eb; 
-    --color-card-bg: white;
-    --shadow-header: 0 1px 10px rgba(0, 0, 0, 0.08);
-}
 
 
 .app-header {
     width: 100%;
-    background: var(--color-card-bg); /* White background */
-    border-bottom: 1px solid var(--color-border-light);
+    background: var(--color-card-bg); /* This variable is now globally available */
     box-shadow: var(--shadow-header);
     position: sticky;
     top: 0;
-    z-index: 50; /* Z-index from original component */
+    z-index: 50;
+    transition: box-shadow 0.3s ease;
 }
 
+/* Enhancing header on scroll (optional: requires JS logic to add a class, e.g., 'scrolled') */
+/* .app-header.scrolled {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+} */
+
 .header-container {
-    max-width: 1200px; /* Equivalent to container mx-auto */
+    max-width: 1280px; /* Slightly wider container for more space */
     margin: 0 auto;
-    height: 80px; /* h-20 equivalent */
+    height: 70px; /* Slightly reduced height for a leaner look */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px; /* px-4 equivalent */
+    padding: 0 32px; /* Increased padding (px-8) */
 }
 
 .header-brand-section {
     display: flex;
     align-items: center;
-    gap: 40px; /* Increased gap */
+    gap: 40px;
 }
 
 /* --- Logo Styling --- */
 .logo-link {
-    font-size: 1.5rem; /* text-xl */
-    font-weight: 800; /* font-bold */
-    letter-spacing: -0.025em; /* tracking-tight */
-    color: var(--color-primary-dark);
+    font-size: 1.625rem; /* Slightly larger, prominent logo */
+    font-weight: 800;
+    letter-spacing: -0.04em; /* Tighter tracking for professionalism */
+    color: var(--color-text-dark); /* Changed logo text to dark for strong contrast */
     display: flex;
     align-items: center;
     text-decoration: none;
     transition: color 0.2s;
 }
 
+/* Enhanced logo icon styling */
 .logo-icon {
     color: var(--color-primary);
-    margin-right: 8px;
+    margin-right: 6px; /* Slightly reduced margin */
 }
 
 /* --- Navigation Links --- */
 
 .nav-links-wrapper {
-    display: none; /* hidden */
+    display: none;
     align-items: center;
-    gap: 24px; /* gap-6 equivalent */
+    gap: 32px; /* Increased gap for better link separation (gap-8) */
 }
 @media (min-width: 768px) {
     .nav-links-wrapper {
-        display: flex; /* md:flex */
+        display: flex;
     }
 }
 
 .nav-link {
-    font-size: 0.875rem; /* text-sm */
-    font-weight: 600; /* font-medium */
-    color: var(--color-text-subtle); /* text-muted-foreground */
-    transition: all 0.2s;
+    font-size: 0.9375rem; /* Slightly larger text-sm (15px) */
+    font-weight: 600;
+    color: var(--color-text-subtle);
+    transition: all 0.25s ease-in-out; /* Smoother, slightly longer transition */
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 5px;
     padding: 5px 0;
-    border-bottom: 2px solid transparent;
+    position: relative; /* Needed for the clean underline effect */
 }
 
-.nav-link:hover, .nav-link.active {
-    color: var(--color-text-dark); /* hover:text-foreground */
-    text-decoration: none;
+/* Clean, modern underline effect */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px; /* Thicker underline */
+    background: var(--color-primary);
+    transform: scaleX(0); /* Start hidden */
+    transition: transform 0.3s ease;
+}
+
+/* Add to .btn-logout-header:focus-visible and .btn-primary-header:focus-visible */
+.btn-logout-header:focus-visible,
+.btn-primary-header:focus-visible {
+    outline: 2px solid var(--color-primary); /* Primary focus ring */
+    outline-offset: 2px;
+}
+
+.nav-link:hover {
+    color: var(--color-text-dark);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    transform: scaleX(1); /* Reveal underline on hover/active */
 }
 
 .nav-link.active {
-    border-bottom: 2px solid var(--color-primary);
+    color: var(--color-primary); /* Active link is primary colored */
 }
 
 .nav-link.admin-link {
-    color: var(--color-primary);
+    color: #ef4444; /* Use a distinct, sharp color for Admin */
 }
 .nav-link.admin-link:hover {
-    color: var(--color-primary-dark);
+    color: #b91c1c;
 }
 
 /* --- User Profile / Auth Actions --- */
 
 .header-actions {
-    /* Container for action buttons */
+    /* Auto layout handled by flexbox */
 }
 
 .user-profile-actions {
     display: flex;
     align-items: center;
-    gap: 16px; /* gap-4 */
+    gap: 20px; /* Increased gap */
 }
 
 .user-greeting {
-    font-size: 0.875rem; /* text-sm */
+    font-size: 0.9375rem; /* Consistent slightly larger text */
     color: var(--color-text-subtle);
     display: none;
 }
 @media (min-width: 640px) {
     .user-greeting {
-        display: inline; /* sm:inline */
+        display: inline;
     }
 }
 
 .user-username {
-    color: var(--color-text-dark); /* text-foreground */
+    color: var(--color-text-dark);
     font-weight: 700;
 }
 
-/* Logout Button */
+/* Logout Button - Refined subtle destructive style */
 .btn-logout-header {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #ef4444; /* text-destructive */
+    color: #b91c1c; /* Deeper red text */
     border: 1px solid #fee2e2;
     background-color: #fef2f2;
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 8px 16px; /* Increased horizontal padding */
+    border-radius: 8px; /* Slightly more rounded corners */
+    cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     gap: 5px;
 }
 .btn-logout-header:hover {
-    background-color: #fca5a5; /* hover:bg-destructive/10 equivalent */
-    color: #991b1b;
+    background-color: #fce7f3; /* Lighter hover background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    color: #7f1d1d; /* Even deeper red */
 }
 
 /* Auth Buttons */
 .auth-buttons-wrapper {
     display: flex;
     align-items: center;
-    gap: 12px; /* gap-3 */
+    gap: 16px; /* Increased gap */
 }
 
+/* Login Link - Clean text button */
 .btn-auth-link {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     font-weight: 600;
     color: var(--color-text-subtle);
     padding: 8px 12px;
@@ -164,28 +185,33 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    text-decoration: none;
 }
 .btn-auth-link:hover {
-    color: var(--color-text-dark);
+    color: var(--color-primary); /* Highlight login link with primary color on hover */
     text-decoration: none;
 }
 
+/* Sign Up Button - Elevated primary button */
 .btn-primary-header {
-    /* Primary Action Button */
-    font-size: 0.875rem;
+    font-size: 0.9375rem; /* Larger button text */
     font-weight: 700;
     background: var(--color-primary);
-    color: white; /* text-primary-foreground */
-    padding: 8px 16px; /* px-4 py-2 */
-    border-radius: 9999px; /* rounded-full */
-    transition: all 0.2s;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* shadow-sm */
+    color: white;
+    padding: 10px 20px; /* Increased padding for a more substantial button */
+    border-radius: 8px; /* Slightly less aggressive rounding than full */
+    transition: all 0.25s ease-in-out;
+    /* Elevated Shadow */
+    box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.1), 0 2px 4px -2px rgba(30, 64, 175, 0.06);
     display: flex;
     align-items: center;
     gap: 5px;
+    border: none;
 }
 .btn-primary-header:hover {
     background: var(--color-primary-dark);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* hover:shadow */
+    /* Deeper shadow on hover */
+    box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.15), 0 4px 6px -4px rgba(30, 64, 175, 0.08);
+    transform: translateY(-1px); /* Subtle lift on hover */
     text-decoration: none;
 }

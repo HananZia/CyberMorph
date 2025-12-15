@@ -1,7 +1,8 @@
 'use client'
 import { useState, useCallback } from "react";
 import { api } from "../../lib/api_helper";
-import './scan.css'; 
+import './scan.css';
+import { Activity } from 'lucide-react';
 import { UploadCloud, CheckCircle, AlertTriangle, File, XCircle, Loader } from 'lucide-react'; // Modern Icons
 
 const ProcessingSpinner = () => (
@@ -47,7 +48,7 @@ export default function ScanPage() {
     }, [file]);
 
     const verdict = result?.verdict || result?.Verdicts?.[0] || 'PROCESSING';
-    const score = (result?.score ?? result?.malware_probability ?? 'N/A').toFixed(4); // Format score to 4 decimal places
+    const score = (result?.score ?? result?.malware_probability ?? 'N/A'); // Format score to 4 decimal places
     const isMalicious = verdict.toLowerCase().includes('malicious') || verdict.toLowerCase().includes('threat') || parseFloat(score) > 0.5;
     const isClean = verdict.toLowerCase().includes('clean') || verdict.toLowerCase().includes('safe');
     

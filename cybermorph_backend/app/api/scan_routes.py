@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.database import models
-from app.schemas.scan import ScanResponse
+from app.schemas.scan import FileScanResult
 from app.core.security import get_current_user_info
 from app.core.config import get_settings
 from app.utils.util import save_upload, sha256_of_file, build_features_deterministic
@@ -20,7 +20,7 @@ def get_optional_token(authorization: str | None = Header(default=None)):
     return None
 
 
-@router.post("/upload", response_model=ScanResponse)
+@router.post("/upload", response_model=FileScanResult)
 async def upload_and_scan(
     file: UploadFile = File(...),
     token: str | None = Depends(get_optional_token),
@@ -82,7 +82,7 @@ async def upload_and_scan(
     }
 
 
-@router.post("/features", response_model=ScanResponse)
+@router.post("/features", response_model=FileScanResult)
 def scan_from_features(
     payload: dict,
     token: str | None = Depends(get_optional_token),

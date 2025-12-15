@@ -4,8 +4,9 @@ from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.database import models
 from app.schemas.user import UserOut
-from app.schemas.scan import ScanResponse
+from app.schemas.scan import FileScanResult
 from app.core.malware import alerts
+
 from app.core.security import admin_required
 
 router = APIRouter(prefix="/admin", tags=["admin"])
@@ -26,11 +27,10 @@ def delete_user(user_id: int, db: Session = Depends(get_db), _p: Dict = Depends(
     return {}
 
 # ---- SCANS ----
-@router.get("/scans", response_model=List[ScanResponse])
-def list_all_scans(db: Session = Depends(get_db), _p: Dict = Depends(admin_required)):
+@router.get("/scans", response_model=List[FileScanResult])
+def list_all_scans(db: Session = Depends(get_db), _p: dict = Depends(admin_required)):
     scans = db.query(models.ScanLog).order_by(models.ScanLog.created_at.desc()).all()
-    # Return SQLAlchemy objects directly so Pydantic can handle serialization
-    return scans
+    return scans  # ✅ full ORM instances
 
 @router.delete("/scans/{scan_id}", status_code=204)
 def delete_scan(scan_id: int, db: Session = Depends(get_db), _p: Dict = Depends(admin_required)):

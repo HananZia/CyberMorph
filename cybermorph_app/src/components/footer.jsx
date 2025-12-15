@@ -5,13 +5,19 @@ export default function Footer() {
   return (
     <footer className="app-footer">
       <div className="footer-container">
-        <div className="footer-copyright">
-          &copy; {new Date().getFullYear()} CyberShield Pro — AI Threat Detection Platform
+        {/* Brand/Logo Section (optional, but adds professionalism) */}
+        <div className="footer-brand">
+          CyberShield Pro
         </div>
-        <div className="footer-links">
+        
+        <div className="footer-links-wrapper">
           <a href="#" className="footer-link">Privacy Policy</a>
           <a href="#" className="footer-link">Terms of Service</a>
           <a href="#" className="footer-link">Contact Support</a>
+        </div>
+        
+        <div className="footer-copyright">
+          &copy; {new Date().getFullYear()} CyberShield Pro
         </div>
       </div>
     </footer>

@@ -56,3 +56,25 @@ def get_stats(token_payload: dict = Depends(get_current_user_info), db: Session 
         "total_scans": total_scans,
         "threats": threats
     }
+
+# --- User-specific stats ---
+@router.get("/my-stats", response_model=Dict)
+def get_my_stats(token_payload: dict = Depends(get_current_user_info), db: Session = Depends(get_db)):
+    """
+    Returns stats only for the currently logged-in user.
+    """
+    user_id = token_payload.get("user_id")
+    if not user_id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
+    total_scans = db.query(models.ScanLog).filter(models.ScanLog.user_id == user_id).count()
+    threats = db.query(models.ScanLog).filter(
+        models.ScanLog.user_id == user_id,
+        models.ScanLog.verdict != "benign"
+    ).count()
+
+    return {
+        "total_scans": total_scans,
+        "threats": threats
+    }
+
