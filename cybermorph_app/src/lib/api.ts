@@ -39,7 +39,7 @@ export interface ScanResult {
   details?: string;
   malware_probability?: number;
   status?: string;
-  created_at?: string;
+  created_at: string;
 }
 
 export interface Stats {
