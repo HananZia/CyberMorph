@@ -47,7 +47,6 @@ cd CyberMorph
 ```bash
 cd cybermorph_backend
 pip install -r requirements.txt
-uvicorn app.main:app --reload
 ```
 
 3. Install frontend dependencies:
@@ -55,7 +54,6 @@ uvicorn app.main:app --reload
 ```bash
 cd ../cybermorph_app
 npm install
-npm run dev
 ```
 
 4. Configure environment variables:
@@ -73,14 +71,14 @@ cp .env.example .env
 
 ```bash
 cd cybermorph_backend
-python main.py
+uvicorn app.main:app --reload
 ```
 
 ### Start Frontend:
 
 ```bash
 cd cybermorph_app
-npm start
+npm run dev
 ```
 
 ### Run Agent:
