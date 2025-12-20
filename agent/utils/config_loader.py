@@ -8,11 +8,7 @@ directories, authentication credentials, and log file paths.
 
 import os
 
-# ============================
 # Agent Configuration
-# ============================
-
-
 class AgentConfig:
     """
     Central configuration class for the CyberMorph agent.
@@ -34,52 +30,32 @@ class AgentConfig:
         USERNAME: Agent username for backend authentication
         PASSWORD: Agent password for backend authentication
     """
-    
-    # ============================
+
     # Backend API Configuration
-    # ============================
-    
     BACKEND_URL = "http://127.0.0.1:8000"
     API_LOGIN_ENDPOINT = "/auth/login"
     API_PREDICT_ENDPOINT = "/predict"
 
-    # ============================
     # File Monitoring Configuration
-    # ============================
-    
     MONITOR_DIRS = [
         os.path.join(os.path.expanduser("~"), "Downloads"),
         os.path.join(os.path.expanduser("~"), "Desktop")
     ]
 
-    # ============================
     # Quarantine Configuration
-    # ============================
-    
     QUARANTINE_DIR = os.path.join(os.getcwd(), "quarantine")
-    
-    # ============================
     # Logging Configuration
-    # ============================
-    
     LOG_FILE = os.path.join(os.getcwd(), "logs", "agent.log")
 
-    # ============================
     # Authentication Configuration
-    # ============================
-    
     USERNAME = os.environ.get("AGENT_USERNAME", "agent_user")
     PASSWORD = os.environ.get("AGENT_PASSWORD", "agent_password")
 
-    # ============================
     # Helper Methods
-    # ============================
-
     @staticmethod
     def ensure_dirs():
         """
         Create necessary directories if they don't exist.
-        
         Ensures that log directory and quarantine directory are created
         with any necessary parent directories.
         """

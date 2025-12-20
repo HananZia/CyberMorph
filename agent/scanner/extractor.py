@@ -2,6 +2,7 @@ import os
 import hashlib
 import random
 
+# Extract features from a file for ML model
 def extract_features(path):
     try:
         filesize = os.path.getsize(path)
@@ -10,6 +11,7 @@ def extract_features(path):
     except Exception as e:
         return None, None
 
+    # Generate dummy features based on file size
     random.seed(filesize)
     features = [random.random() for _ in range(2381)]
     return features, sha256

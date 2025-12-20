@@ -13,6 +13,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { scanApi, userApi, ScanResult, Stats } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 
+// Dashboard Page
 const Dashboard = () => {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -37,6 +38,7 @@ const Dashboard = () => {
     }
   };
 
+  // Handle File Scan
   const handleFileScan = async (file: File) => {
     setIsScanning(true);
     setScanProgress(0);
@@ -53,7 +55,7 @@ const Dashboard = () => {
     try {
       setScanStatus('analyzing');
       const result = await scanApi.uploadAndScan(file);
-      
+      // Complete Scan
       clearInterval(progressInterval);
       setScanProgress(100);
       setScanStatus('complete');
@@ -78,6 +80,7 @@ const Dashboard = () => {
     }
   };
 
+  // Reset Scan State
   const resetScan = () => {
     setIsScanning(false);
     setScanProgress(0);
@@ -85,6 +88,7 @@ const Dashboard = () => {
     setScanResult(null);
   };
 
+  // Render
   return (
     <div className="min-h-screen bg-background matrix-bg">
       <CyberBackground />

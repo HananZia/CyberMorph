@@ -12,11 +12,7 @@ import hashlib
 import time
 from utils.logger import log_info
 
-# ============================
 # File Quarantine Functions
-# ============================
-
-
 def move_to_quarantine(file_path: str, quarantine_directory: str) -> str:
     """
     Move a suspicious file to quarantine with a unique identifier.

@@ -4,6 +4,8 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 // Types
+
+// User-related types
 export interface User {
   id: number;
   username: string;
@@ -12,17 +14,20 @@ export interface User {
   created_at?: string;
 }
 
+// Auth-related types
 export interface LoginRequest {
   username: string;
   password: string;
 }
 
+// Registration-related types
 export interface RegisterRequest {
   username: string;
   email: string;
   password: string;
 }
 
+// Token response type
 export interface TokenResponse {
   access_token: string;
   token_type: string;
@@ -31,6 +36,7 @@ export interface TokenResponse {
   role: string;
 }
 
+// Scan-related types
 export interface ScanResult {
   id: number;
   filename: string;
@@ -42,6 +48,7 @@ export interface ScanResult {
   created_at: string;
 }
 
+// Stats-related types
 export interface Stats {
   total_scans: number;
   threats: number;
@@ -73,6 +80,7 @@ export const authApi = {
     return response.json();
   },
 
+  // Registration API
   async register(data: RegisterRequest): Promise<User> {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
@@ -86,6 +94,7 @@ export const authApi = {
     return response.json();
   },
 
+  // Password Reset APIs
   async forgotPassword(email: string): Promise<{ token: string; message: string }> {
     const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
       method: 'POST',
@@ -99,6 +108,7 @@ export const authApi = {
     return response.json();
   },
 
+  // Verify Code API
   async verifyCode(code: string, token: string): Promise<{ message: string }> {
     const response = await fetch(`${API_BASE_URL}/auth/verify-code`, {
       method: 'POST',
@@ -112,6 +122,7 @@ export const authApi = {
     return response.json();
   },
 
+  // Reset Password API
   async resetPassword(code: string, token: string, newPassword: string): Promise<{ message: string }> {
     const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
       method: 'POST',
@@ -164,6 +175,7 @@ export const scanApi = {
     return response.json();
   },
 
+  // New method to scan from features
   async scanFromFeatures(features: number[], filename?: string): Promise<ScanResult> {
     const token = localStorage.getItem('token');
     const response = await fetch(`${API_BASE_URL}/scan/features`, {
@@ -192,6 +204,7 @@ export const adminApi = {
     return response.json();
   },
 
+  // Delete User API
   async deleteUser(userId: number): Promise<void> {
     const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
       method: 'DELETE',
@@ -200,6 +213,7 @@ export const adminApi = {
     if (!response.ok) throw new Error('Failed to delete user');
   },
 
+  // Scan Management APIs
   async getScans(): Promise<ScanResult[]> {
     const response = await fetch(`${API_BASE_URL}/admin/scans`, {
       headers: getAuthHeaders(),
@@ -208,6 +222,7 @@ export const adminApi = {
     return response.json();
   },
 
+  // Delete Scan API
   async deleteScan(scanId: number): Promise<void> {
     const response = await fetch(`${API_BASE_URL}/admin/scans/${scanId}`, {
       method: 'DELETE',
@@ -216,6 +231,7 @@ export const adminApi = {
     if (!response.ok) throw new Error('Failed to delete scan');
   },
 
+  // Stats API
   async getStats(): Promise<Stats> {
     const response = await fetch(`${API_BASE_URL}/admin/stats`, {
       headers: getAuthHeaders(),
@@ -224,6 +240,7 @@ export const adminApi = {
     return response.json();
   },
 
+  // New method to get alerts
   async getAlerts(): Promise<any[]> {
     const response = await fetch(`${API_BASE_URL}/admin/alerts`, {
       headers: getAuthHeaders(),

@@ -8,9 +8,7 @@ for recording agent activities, errors, and important events to a log file.
 import logging
 from utils.config_loader import AgentConfig
 
-# ============================
 # Logging Configuration
-# ============================
 
 # Ensure log directory exists
 AgentConfig.ensure_dirs()
@@ -22,11 +20,7 @@ logging.basicConfig(
     format="%(asctime)s — %(levelname)s — %(message)s",
 )
 
-# ============================
 # Logging Functions
-# ============================
-
-
 def log_info(message: str) -> None:
     """
     Log an informational message.

@@ -14,11 +14,7 @@ from utils.logger import log_info
 import os
 
 
-# ============================
 # File System Event Handler
-# ============================
-
-
 class FileHandler(FileSystemEventHandler):
     """
     Custom file system event handler for detecting new executable files.
@@ -46,11 +42,8 @@ class FileHandler(FileSystemEventHandler):
                 # Schedule scan as async task
                 asyncio.create_task(scan_file(event.src_path))
 
-# ============================
+
 # File Watcher Functions
-# ============================
-
-
 async def start_watcher():
     """
     Start monitoring configured directories for new files.

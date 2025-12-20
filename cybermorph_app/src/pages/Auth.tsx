@@ -11,11 +11,13 @@ import { authApi } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 
+// Validation Schemas
 const loginSchema = z.object({
   username: z.string().min(3, 'Username must be at least 3 characters'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
+// Registration Schema
 const registerSchema = z.object({
   username: z.string().min(3, 'Username must be at least 3 characters'),
   email: z.string().email('Invalid email address'),
@@ -26,14 +28,17 @@ const registerSchema = z.object({
   path: ['confirmPassword'],
 });
 
+// Auth Modes
 type AuthMode = 'login' | 'register' | 'forgot' | 'verify' | 'reset';
 
+// Auth Page Component
 const Auth = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { login, register, isAuthenticated, user } = useAuth();
   const { toast } = useToast();
 
+  // State variables
   const [mode, setMode] = useState<AuthMode>(
     (searchParams.get('mode') as AuthMode) || 'login'
   );
@@ -48,12 +53,14 @@ const Auth = () => {
   const [resetToken, setResetToken] = useState('');
   const [verificationCode, setVerificationCode] = useState('');
 
+  // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated && user) {
       navigate(user.role === 'admin' ? '/admin' : '/dashboard');
     }
   }, [isAuthenticated, user, navigate]);
 
+  // Form validation
   const validateForm = () => {
     try {
       if (mode === 'login') {
@@ -77,6 +84,7 @@ const Auth = () => {
     }
   };
 
+  // Handlers
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -96,6 +104,7 @@ const Auth = () => {
     }
   };
 
+  // Register Handler
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -118,6 +127,7 @@ const Auth = () => {
     }
   };
 
+  // Forgot Password Handler
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
@@ -125,6 +135,7 @@ const Auth = () => {
       return;
     }
 
+    // Forgot Password API Call
     setIsLoading(true);
     try {
       const response = await authApi.forgotPassword(email);
@@ -142,6 +153,7 @@ const Auth = () => {
     }
   };
 
+  // Verify Code Handler
   const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!verificationCode) {
@@ -165,6 +177,7 @@ const Auth = () => {
     }
   };
 
+  // Reset Password Handler
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -172,6 +185,7 @@ const Auth = () => {
       return;
     }
 
+    // Reset Password API Call
     setIsLoading(true);
     try {
       await authApi.resetPassword(verificationCode, resetToken, password);
@@ -190,6 +204,7 @@ const Auth = () => {
     }
   };
 
+  // Render
   return (
     <div className="min-h-screen bg-background matrix-bg flex items-center justify-center p-4">
       <CyberBackground />

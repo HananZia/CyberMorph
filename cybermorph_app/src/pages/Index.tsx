@@ -11,6 +11,7 @@ import Navbar from '@/components/Navbar';
 import { scanApi, ScanResult } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 
+// Index (Home) Page
 const Index = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
@@ -18,6 +19,7 @@ const Index = () => {
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
   const { toast } = useToast();
 
+  // Handle File Scan
   const handleFileScan = async (file: File) => {
     setIsScanning(true);
     setScanProgress(0);
@@ -58,6 +60,7 @@ const Index = () => {
     }
   };
 
+  // Reset Scan State
   const resetScan = () => {
     setIsScanning(false);
     setScanProgress(0);
@@ -65,6 +68,7 @@ const Index = () => {
     setScanResult(null);
   };
 
+  // Features List
   const features = [
     {
       icon: Cpu,
@@ -88,6 +92,7 @@ const Index = () => {
     },
   ];
 
+  // Render
   return (
     <div className="min-h-screen bg-background matrix-bg">
       <CyberBackground />

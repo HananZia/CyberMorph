@@ -14,8 +14,9 @@ import { adminApi, User, ScanResult, Stats } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
-type AdminTab = 'overview' | 'users' | 'scans' | 'alerts';
+type AdminTab = 'overview' | 'users' | 'scans' | 'alerts'; // Added 'alerts' tab
 
+// Admin Page Component
 const Admin = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<AdminTab>('overview');
@@ -29,6 +30,7 @@ const Admin = () => {
     loadData();
   }, []);
 
+  // Load all admin data
   const loadData = async () => {
     setIsLoading(true);
     try {
@@ -53,6 +55,7 @@ const Admin = () => {
     }
   };
 
+  // Delete User Handler
   const handleDeleteUser = async (userId: number) => {
     if (!confirm('Are you sure you want to delete this user?')) return;
     try {
@@ -64,6 +67,7 @@ const Admin = () => {
     }
   };
 
+  // Delete Scan Handler
   const handleDeleteScan = async (scanId: number) => {
   try {
     await adminApi.deleteScan(scanId);
@@ -79,6 +83,7 @@ const Admin = () => {
 };
 
 
+// Tabs Definition
   const tabs = [
     { id: 'overview', label: 'Overview', icon: Activity },
     { id: 'users', label: 'Users', icon: Users },
@@ -86,8 +91,10 @@ const Admin = () => {
     { id: 'alerts', label: 'Alerts', icon: AlertTriangle },
   ];
 
+  // Calculate threat rate
   const threatRate = stats ? (stats.threats / Math.max(stats.total_scans, 1)) : 0;
 
+  // Render
   return (
     <div className="min-h-screen bg-background matrix-bg">
       <CyberBackground />

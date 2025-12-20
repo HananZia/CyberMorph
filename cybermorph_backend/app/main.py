@@ -30,7 +30,7 @@ logger = logging.getLogger("cybermorph")
 # FastAPI Application Setup
 # ============================
 
-app = FastAPI(title="CyberMorph — AI Antivirus & Malware Detection")
+app = FastAPI(title="CyberMorph — AI Based Antivirus & Malware Detection & Prevention System")
 
 # ============================
 # CORS Middleware Configuration

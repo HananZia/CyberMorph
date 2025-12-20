@@ -4,11 +4,13 @@ from tenacity import retry, wait_exponential, stop_after_attempt
 from utils.config_loader import AgentConfig
 from utils.logger import log_info, log_error
 
+# API Client for communicating with the backend server
 class APIClient:
     def __init__(self):
         self.token = None
         self.client = httpx.AsyncClient(timeout=10)
 
+# Authenticate and obtain a token
     async def authenticate(self):
         try:
             res = await self.client.post(
@@ -24,6 +26,7 @@ class APIClient:
             log_error(f"Auth error: {e}")
         return False
 
+# Scan a file by sending its features to the backend
     @retry(wait=wait_exponential(min=1, max=10), stop=stop_after_attempt(5))
     async def scan_file(self, features):
         if not self.token:
