@@ -13,3 +13,52 @@
 2025-12-14 18:08:39,302 — INFO — Watching: C:\Users\hanan\Downloads
 2025-12-14 18:13:32,277 — INFO — CyberMorph Agent Starting...
 2025-12-14 18:13:32,277 — INFO — Watching: C:\Users\hanan\Downloads
+2025-12-20 20:20:28,232 — INFO — CyberMorph Agent Starting...
+2025-12-20 20:20:28,233 — INFO — Watching: C:\Users\hanan\Downloads
+2025-12-20 20:20:28,235 — INFO — Process Monitor Started.
+2025-12-20 20:20:28,265 — INFO — [PROCESS DETECTED] 4848 - WMIRegistrationService.exe => C:\Windows\System32\DriverStore\FileRepository\mewmiprov.inf_amd64_2c17521ca0d3f79c\WMIRegistrationService.exe
+2025-12-20 20:20:28,265 — INFO — Scanning file: C:\Windows\System32\DriverStore\FileRepository\mewmiprov.inf_amd64_2c17521ca0d3f79c\WMIRegistrationService.exe
+2025-12-20 20:20:28,308 — INFO — Failed to move to quarantine: [WinError 5] Access is denied: 'C:\\Windows\\System32\\DriverStore\\FileRepository\\mewmiprov.inf_amd64_2c17521ca0d3f79c\\WMIRegistrationService.exe'
+2025-12-20 20:20:28,316 — INFO — System Watcher Started.
+2025-12-20 20:20:29,317 — INFO — High RAM usage detected: 87.5%
+2025-12-20 20:20:35,344 — INFO — High RAM usage detected: 87.2%
+2025-12-20 20:20:41,349 — INFO — High RAM usage detected: 87.2%
+2025-12-20 20:20:47,359 — INFO — High RAM usage detected: 88.2%
+2025-12-20 20:20:53,370 — INFO — High RAM usage detected: 88.0%
+2025-12-20 20:20:59,376 — INFO — High RAM usage detected: 87.3%
+2025-12-20 20:21:05,394 — INFO — High RAM usage detected: 87.7%
+2025-12-20 20:21:11,407 — INFO — High RAM usage detected: 87.7%
+2025-12-20 20:21:17,420 — INFO — High RAM usage detected: 88.9%
+2025-12-20 20:21:23,441 — INFO — High RAM usage detected: 89.5%
+2025-12-20 20:21:29,456 — INFO — High RAM usage detected: 89.1%
+2025-12-20 20:21:35,467 — INFO — High RAM usage detected: 89.2%
+2025-12-20 20:21:41,485 — INFO — High RAM usage detected: 89.1%
+2025-12-20 20:21:47,491 — INFO — High RAM usage detected: 89.0%
+2025-12-20 20:21:53,498 — INFO — High RAM usage detected: 89.6%
+2025-12-20 20:21:59,515 — INFO — High RAM usage detected: 89.6%
+2025-12-20 20:22:05,528 — INFO — High RAM usage detected: 90.0%
+2025-12-20 20:22:11,534 — INFO — High RAM usage detected: 90.6%
+2025-12-20 20:22:17,551 — INFO — High RAM usage detected: 90.4%
+2025-12-20 20:22:23,565 — INFO — High RAM usage detected: 90.5%
+2025-12-20 20:22:29,582 — INFO — High RAM usage detected: 91.1%
+2025-12-20 20:22:35,590 — INFO — High RAM usage detected: 91.2%
+2025-12-20 20:22:41,604 — INFO — High RAM usage detected: 91.5%
+2025-12-20 20:22:47,622 — INFO — High RAM usage detected: 91.5%
+2025-12-20 20:22:53,626 — INFO — High RAM usage detected: 91.5%
+2025-12-20 20:22:59,640 — INFO — High RAM usage detected: 91.5%
+2025-12-20 20:23:05,653 — INFO — High RAM usage detected: 90.5%
+2025-12-20 20:23:11,667 — INFO — High RAM usage detected: 91.2%
+2025-12-20 20:26:09,997 — INFO — CyberMorph Agent Starting...
+2025-12-20 20:26:09,997 — INFO — Watching: C:\Users\hanan\Downloads
+2025-12-20 20:26:10,014 — INFO — Process Monitor Started.
+2025-12-20 20:26:10,020 — INFO — [PROCESS DETECTED] 4848 - WMIRegistrationService.exe => C:\Windows\System32\DriverStore\FileRepository\mewmiprov.inf_amd64_2c17521ca0d3f79c\WMIRegistrationService.exe
+2025-12-20 20:26:10,020 — INFO — Scanning file: C:\Windows\System32\DriverStore\FileRepository\mewmiprov.inf_amd64_2c17521ca0d3f79c\WMIRegistrationService.exe
+2025-12-20 20:26:10,442 — INFO — Failed to move to quarantine: [WinError 5] Access is denied: 'C:\\Windows\\System32\\DriverStore\\FileRepository\\mewmiprov.inf_amd64_2c17521ca0d3f79c\\WMIRegistrationService.exe'
+2025-12-20 20:26:10,452 — INFO — System Watcher Started.
+2025-12-20 20:26:11,453 — INFO — High RAM usage detected: 87.3%
+2025-12-20 20:26:17,471 — INFO — High RAM usage detected: 87.4%
+2025-12-20 20:26:23,486 — INFO — High RAM usage detected: 87.5%
+2025-12-20 20:26:29,501 — INFO — High CPU usage detected: 85.4%
+2025-12-20 20:26:29,501 — INFO — High RAM usage detected: 88.4%
+2025-12-20 20:26:35,518 — INFO — High RAM usage detected: 89.2%
+2025-12-20 20:26:41,534 — INFO — High RAM usage detected: 89.7%

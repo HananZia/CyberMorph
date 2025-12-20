@@ -78,25 +78,36 @@ def delete_user(
 # ============================
 
 
-@router.get("/scans", response_model=List[FileScanResult])
+@router.get("/scans", response_model=List[Dict])
 def list_all_scans(
     db: Session = Depends(get_db),
     _authorization: Dict = Depends(admin_required)
 ):
     """
     Get a list of all scan logs, ordered by most recent first.
-    
-    Args:
-        db: Database session dependency
-        _authorization: Admin authorization check dependency
-        
-    Returns:
-        List[FileScanResult]: All scan records sorted by created_at descending
+    Ensures every scan has 'id' and serializable fields.
     """
     scans = db.query(models.ScanLog).order_by(
         models.ScanLog.created_at.desc()
     ).all()
-    return scans
+
+    serialized_scans = []
+    for s in scans:
+        # Defensive check for missing ID
+        if s.id is None:
+            continue  # skip broken records
+
+        serialized_scans.append({
+            "id": s.id,
+            "filename": s.filename,
+            "verdict": s.verdict,
+            "score": float(s.score) if s.score else 0.0,
+            "details": s.details,
+            "created_at": s.created_at.isoformat() if s.created_at else None,
+            "malware_probability": float(s.score) if s.score else 0.0,
+        })
+
+    return serialized_scans
 
 
 @router.delete("/scans/{scan_id}", status_code=204)

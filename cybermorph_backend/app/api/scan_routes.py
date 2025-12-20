@@ -17,6 +17,7 @@ from app.core.config import get_settings
 from app.utils.util import save_upload, sha256_of_file, build_features_deterministic
 from app.core.malware import model, predict_malware
 import os
+from app.database.models import User, ScanLog
 
 router = APIRouter(prefix="/scan", tags=["scan"])
 
@@ -131,6 +132,7 @@ async def upload_and_scan(
     db.refresh(scan)
 
     return {
+        "id": scan.id,
         "filename": file.filename,
         "verdict": verdict,
         "score": score,
@@ -207,8 +209,27 @@ def scan_from_features(
     db.refresh(scan)
 
     return {
+        "id": scan.id,
         "filename": filename,
         "verdict": verdict,
         "score": score,
         "details": scan.details,
     }
+
+@router.delete("/scans/{scan_id}", status_code=204)
+def delete_scan(
+    scan_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user_info),
+):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Admins only")
+
+    # Use the correct column name: id
+    scan = db.query(ScanLog).filter(ScanLog.id == scan_id).first()
+    if not scan:
+        raise HTTPException(status_code=404, detail="Scan not found")
+
+    db.delete(scan)
+    db.commit()
+

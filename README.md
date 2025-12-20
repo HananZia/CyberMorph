@@ -47,6 +47,7 @@ cd CyberMorph
 ```bash
 cd cybermorph_backend
 pip install -r requirements.txt
+uvicorn app.main:app --reload
 ```
 
 3. Install frontend dependencies:
@@ -54,6 +55,7 @@ pip install -r requirements.txt
 ```bash
 cd ../cybermorph_app
 npm install
+npm run dev
 ```
 
 4. Configure environment variables:
@@ -116,5 +118,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - **Author:** Muhammad Hanan Zia
 - **GitHub:** [HananZia](https://github.com/HananZia)
 - **Email:** hananzia477@gmail.com
-
-
