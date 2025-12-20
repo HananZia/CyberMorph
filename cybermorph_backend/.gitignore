@@ -40,11 +40,6 @@ tmp/
 #  DATABASE FILES
 # ===========================
 
-*.db
-*.sqlite
-*.sqlite3
-*.sql
-
 # ===========================
 #  FASTAPI / UVICORN
 # ===========================
@@ -56,18 +51,7 @@ reload/
 #  MACHINE LEARNING FILES
 # ===========================
 
-# ML models
-*.joblib
-*.pkl
-*.ckpt
-*.bin
-*.model
-ml_lab/models/*.txt
-cybermorph_backend/ml_lab/models/*.txt
 
-# Model directories
-ml_lab/models/
-cybermorph_backend/ml_lab/models/
 ml_lab/checkpoints/
 
 # TensorBoard logs
