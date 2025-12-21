@@ -10,6 +10,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 from app.database import init_db  # noqa: F401
+from app.api.contact_routes import router as contact_router
 
 # Import API route modules
 from app.api import auth_routes, user_routes, predict, file_scan, scan_routes, logs, admin_routes
@@ -54,6 +55,7 @@ app.include_router(auth_routes.router, prefix="/api")
 app.include_router(user_routes.router, prefix="/api")
 app.include_router(predict.router, prefix="/api")
 app.include_router(file_scan.router, prefix="/api")
+app.include_router(contact_router, prefix="/api")
 app.include_router(scan_routes.router, prefix="/api")
 app.include_router(logs.router, prefix="/api")
 app.include_router(admin_routes.router, prefix="/api")

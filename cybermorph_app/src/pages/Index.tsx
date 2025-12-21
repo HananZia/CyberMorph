@@ -248,7 +248,7 @@ const Index = () => {
     </div>
 
     {/* Social Media Links */}
-    <div className="flex justify-center gap-4 mb-4">
+    <div className="flex justify-center gap-4 mb-2">
       <a
         href="https://twitter.com/yourhandle"
         target="_blank"
@@ -266,13 +266,35 @@ const Index = () => {
         LinkedIn
       </a>
       <a
-        href="https://github.com/yourprofile"
+        href="https://github.com/HananZia"
         target="_blank"
         rel="noopener noreferrer"
         className="text-muted-foreground hover:text-primary transition-colors"
       >
         GitHub
       </a>
+    </div>
+
+    {/* Internal Page Links */}
+    <div className="flex justify-center gap-4 mb-4">
+      <Link
+        to="/terms"
+        className="text-muted-foreground hover:text-primary transition-colors"
+      >
+        Terms of Service
+      </Link>
+      <Link
+        to="/privacy"
+        className="text-muted-foreground hover:text-primary transition-colors"
+      >
+        Privacy Policy
+      </Link>
+      <Link
+        to="/contact"
+        className="text-muted-foreground hover:text-primary transition-colors"
+      >
+        Contact
+      </Link>
     </div>
 
     {/* Dynamic Year */}

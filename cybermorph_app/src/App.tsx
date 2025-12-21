@@ -11,6 +11,9 @@ import Auth from "@/pages/Auth";
 import Dashboard from "@/pages/Dashboard";
 import Admin from "@/pages/Admin";
 import NotFound from "@/pages/NotFound";
+import Terms from "@/pages/terms";
+import PrivacyPolicy from "@/pages/Privacy";
+import Contact from "@/pages/Contact";
 
 import ProtectedRoute from "@/routes/protectedRoutes";
 import AdminRoute from "@/routes/AdminRoute";
@@ -30,6 +33,11 @@ const App = () => {
               {/* Public routes */}
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+
+              {/* New pages from footer links */}
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/contact" element={<Contact />} />
 
               {/* User dashboard */}
               <Route

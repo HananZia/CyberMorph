@@ -45,3 +45,26 @@ def send_recovery_email(recipient_email: str, verification_code: str) -> None:
     with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as smtp_connection:
         smtp_connection.login(SMTP_USER, SMTP_PASS)
         smtp_connection.sendmail(SMTP_USER, recipient_email, message.as_string())
+
+def send_contact_email(sender_name: str, sender_email: str, message_content: str) -> None:
+    """
+    Sends a contact form message to CyberMorph support email.
+    """
+    body = f"""
+    New Contact Form Submission:
+
+    Name: {sender_name}
+    Email: {sender_email}
+
+    Message:
+    {message_content}
+    """
+
+    message = MIMEText(body)
+    message["Subject"] = "CyberMorph Contact Form Submission"
+    message["From"] = SMTP_USER
+    message["To"] = SMTP_USER  # send to your own email
+
+    with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as smtp:
+        smtp.login(SMTP_USER, SMTP_PASS)
+        smtp.sendmail(SMTP_USER, SMTP_USER, message.as_string())
